@@ -6,7 +6,7 @@ const ChannelHeader = ({user, subscribers, channels}) => {
     <div className="flex items-center justify-between mt-6">
       <div className="flex items-center gap-6">
         <img
-          src={user?.avatar || ""}
+          src={user?.avatar || null}
           alt="avatar"
           className="w-28 h-28 rounded-full border-4 border-black"
         />

@@ -11,10 +11,10 @@ import FollowingGrid from "../components/profile/FollwingGrid";
 import { useAuth } from "../context/AuthContext";
 import { fetchChannelSubscribers, fetchSubscribedChannels } from "../api/subscription.api";
 const Profile=()=>{
-    const {user}=useAuth();
+    const {user, loading}=useAuth();
     const [subscribers,setSubscribers]=useState(0)
     const [channels,setChannels]=useState(0)
-    
+
     useEffect(()=>{
         if (user && user._id) {
             const response=async()=>{
@@ -28,6 +28,9 @@ const Profile=()=>{
     },[user])
     const [activeTab,setActiveTab]=useState("Following")
 
+    if (loading) return <Layout><div className="text-white">Loading...</div></Layout>;
+    if (!user) return <Layout><div className="text-white">Please log in to view your profile.</div></Layout>;
+
     return(
         <Layout>
         <div className="text-white">
@@ -38,7 +41,7 @@ const Profile=()=>{
             {activeTab==="Playlists" && <PlaylistGrid playlists={playlists}/>}
             {activeTab==="Tweets" && <ChannelTweets/>}
             {activeTab === "Following" && <FollowingGrid />}
-            
+
 
         </div>
         </Layout>

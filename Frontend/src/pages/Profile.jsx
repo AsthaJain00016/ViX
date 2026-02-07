@@ -16,14 +16,16 @@ const Profile=()=>{
     const [channels,setChannels]=useState(0)
     
     useEffect(()=>{
-        const response=async()=>{
-            const resSubscriber=await fetchChannelSubscribers(user._id)
-            setSubscribers(resSubscriber)
-            const resChannel=await fetchSubscribedChannels(user._id)
-            setChannels(resChannel)
+        if (user && user._id) {
+            const response=async()=>{
+                const resSubscriber=await fetchChannelSubscribers(user._id)
+                setSubscribers(resSubscriber)
+                const resChannel=await fetchSubscribedChannels(user._id)
+                setChannels(resChannel)
+            }
+            response()
         }
-        response()
-    },[])
+    },[user])
     const [activeTab,setActiveTab]=useState("Following")
 
     return(

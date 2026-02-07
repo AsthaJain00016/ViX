@@ -39,7 +39,7 @@ const Watch=()=>{
         <Layout>
         <div className="grid grid-cols-12 gap-6 p-6 text-white">
             <div className="col-span-8">
-                <VideoPlayer src={video.videoFile}/>
+                <VideoPlayer src={video.videoFile || ""}/>
                 <VideoMeta video={video}/>
                 <Comments videoId={videoId}/>
             </div>

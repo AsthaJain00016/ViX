@@ -101,7 +101,7 @@ const VideoPlayer = ({ src }) => {
     >
       <video
         ref={videoRef}
-        src={src}
+        src={src || null}
         onTimeUpdate={handleTimeUpdate}
         className={`w-full ${
           isFullscreen ? "h-screen object-contain" : "h-105 object-cover"

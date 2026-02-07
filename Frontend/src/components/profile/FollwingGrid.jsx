@@ -10,12 +10,14 @@ const FollowingGrid = () => {
   const {user}=useAuth()
 
   useEffect(()=>{
-     const response=async()=>{
-      const data=await fetchSubscribedChannels(user._id);
-      setFollowers(data.channels)
+     if (user && user._id) {
+         const response=async()=>{
+          const data=await fetchSubscribedChannels(user._id);
+          setFollowers(data.channels)
+         }
+         response()
      }
-     response()
-  },[])
+  },[user])
 
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

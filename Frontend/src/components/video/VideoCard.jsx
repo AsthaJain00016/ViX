@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router-dom"
+
 export default function VideoCard({video}){
+    const navigate=useNavigate()
     return(
-        <div className="cursor-pointer group">
+        <div
+        onClick={()=>navigate(`/watch/${video._id}`)}
+         className="cursor-pointer group">
             <div className="relative rounded-xl overflow-hidden">
                 <img
                 src={video.thumbnail}

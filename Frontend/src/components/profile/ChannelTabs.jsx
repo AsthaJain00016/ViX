@@ -1,4 +1,4 @@
-const tabs = ["Videos", "Playlist", "Tweets", "Following"];
+const tabs = ["Videos", "Playlists", "Tweets", "Following"];
 
 const ChannelTabs = ({ active, setActive }) => {
   return (

@@ -1,6 +1,5 @@
 import VideoGrid from "../video/VideoGrid";
-import { videos } from "../../data/video";
-const ChannelVideoGrid = () => {
+const ChannelVideoGrid = ({videos}) => {
   
   return (
     <div className="mt-6">

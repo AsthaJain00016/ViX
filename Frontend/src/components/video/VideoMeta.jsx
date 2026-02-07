@@ -1,12 +1,15 @@
-const VideoMeta = () => {
+import { fetchChannelSubscribers } from "../../api/subscription.api";
+const VideoMeta = ({video}) => {
+  
+
   return (
     <div className="mt-4 text-white">
       <h1 className="text-xl font-semibold">
-        Lex Fridman plays Red Dead Redemption 2
+        {video.title}
       </h1>
 
       <p className="text-gray-400 text-sm mt-1">
-        109,067 views • 18 hours ago
+        {video.views} views . {video.duration}
       </p>
 
       {/* Channel + Actions */}
@@ -14,12 +17,12 @@ const VideoMeta = () => {
         {/* Channel */}
         <div className="flex items-center gap-3">
           <img
-            src="https://i.pravatar.cc/100"
+            src={video.owner.avatar}
             className="w-10 h-10 rounded-full"
           />
           <div>
-            <p className="font-medium">Lex Fridman</p>
-            <p className="text-xs text-gray-400">705K followers</p>
+            <p className="font-medium">{video.owner.username}</p>
+            <p className="text-xs text-gray-400">{/*Subscribers*/}</p>
           </div>
           <button className="ml-4 bg-purple-600 px-4 py-1.5 rounded-md text-sm">
             Follow
@@ -36,8 +39,7 @@ const VideoMeta = () => {
 
       {/* Description */}
       <div className="mt-4 bg-neutral-900 p-3 rounded-lg text-sm text-gray-300">
-        TimUrban is the author of the blog Wait But Why and a new book
-        "What's Our Problem?" A Self-Help Book...
+        {video.description}
       </div>
     </div>
   );

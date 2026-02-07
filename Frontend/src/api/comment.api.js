@@ -17,3 +17,12 @@ export const deleteComment=(commentId)=>{
 export const updateComment=(commentId)=>{
     return api.patch(`/comments/c/${commentId}`)
 }
+
+export const fetchTweetComments=async(tweetId)=>{
+    const res=await api.get(`/comments/t/${tweetId}`)
+    return res.data
+}
+
+export const addTweetComment=(tweetId, data)=>{
+    return api.post(`/comments/t/${tweetId}`, data)
+}

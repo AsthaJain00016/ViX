@@ -4,7 +4,7 @@ export const likeVideo=(videoId)=>{
     return api.post(`/likes/toggle/v/${videoId}`)
 }
 export const likeTweet=(tweetId)=>{
-    return api.post(`/likes/toggle/v/${tweetId}`)
+    return api.post(`/likes/toggle/t/${tweetId}`)
 }
 export const likeComment=(commentId)=>{
     return api.post(`/likes/toggle/v/${commentId}`)

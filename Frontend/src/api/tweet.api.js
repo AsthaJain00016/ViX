@@ -1,7 +1,7 @@
 import api from "./axios";
 
-export const createTweet=()=>{
-    return api.post(`/tweets`)
+export const createTweet=(data)=>{
+    return api.post(`/tweets`, data)
 }
 
 export const fetchUserTweets=(userId)=>{

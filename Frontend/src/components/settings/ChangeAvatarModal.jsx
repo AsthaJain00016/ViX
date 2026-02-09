@@ -19,6 +19,7 @@ const ChangeAvatarModal = ({ onClose }) => {
       setUser(updatedUser);
       onClose();
     } catch (err) {
+      console.log(err)
       alert("Avatar update failed");
     } finally {
       setLoading(false);
@@ -39,8 +40,9 @@ const ChangeAvatarModal = ({ onClose }) => {
          name="avatar"
        accept="image/*"
         onChange={(e) => setAvatar(e.target.files[0])}
+        className="w-full mb-4 bg-black border border-gray-700 px-3 py-2 rounded"
       />
-          <button onClick={handleSubmit} disabled={loading}>
+          <button onClick={handleSubmit} disabled={loading} className="w-full bg-purple-600 py-2 rounded">
         {loading ? "Uploading..." : "Update Avatar"}
       </button>
     

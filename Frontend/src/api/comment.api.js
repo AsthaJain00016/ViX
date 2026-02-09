@@ -19,10 +19,13 @@ export const updateComment=(commentId)=>{
 }
 
 export const fetchTweetComments=async(tweetId)=>{
-    const res=await api.get(`/comments/t/${tweetId}`)
-    return res.data
+    const res=await api.get(`/comments/t/${tweetId}`,{withCredentials:true})
+    return res.data.data
 }
 
-export const addTweetComment=(tweetId, data)=>{
-    return api.post(`/comments/t/${tweetId}`, data)
+export const addTweetComment=async(tweetId, data)=>{
+    const res=await api.post(`/comments/t/${tweetId}`, data,
+        {withCredentials:true}
+    )
+    return res.data.data
 }

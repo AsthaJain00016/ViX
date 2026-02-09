@@ -4,8 +4,10 @@ import { likeTweet } from "../../api/like.api";
 import { addTweetComment, fetchTweetComments } from "../../api/comment.api";
 import { deleteTweet } from "../../api/tweet.api";
 import { useAuth } from "../../context/AuthContext";
+import React from "react";
+import { useCallback } from "react";
 
-const TweetCard = ({ tweet, onDeleteTweet }) => {
+const TweetCard =React.memo(({ tweet, onDeleteTweet }) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(tweet.isLiked || false);
   const [likesCount, setLikesCount] = useState(tweet.likesCount || 0);
@@ -31,29 +33,33 @@ const TweetCard = ({ tweet, onDeleteTweet }) => {
     }
   };
 
-  const handleComment = async () => {
+  const handleComment =useCallback( async () => {
     if (!newComment.trim()) return;
+
     setCommenting(true);
     try {
-      await addTweetComment(tweet._id, { content: newComment });
+      const newAddedCommment=await addTweetComment(tweet._id, { content: newComment });
       setNewComment("");
-      setCommentsCount(commentsCount + 1);
-      // Refresh comments
-      const response = await fetchTweetComments(tweet._id);
-      setComments(response.data.data || []);
+      setCommentsCount((prev)=>prev+1);
+
+      setComments((prev)=>{
+        const updated=[newAddedCommment,...prev]
+        setCommentsCount(updated.length)
+        return updated
+      });
       setShowComments(true); // Show comments section after posting
     } catch (error) {
       console.error("Error adding comment:", error);
     } finally {
       setCommenting(false);
     }
-  };
+  });
 
   const toggleComments = async () => {
     if (!showComments) {
       try {
         const response = await fetchTweetComments(tweet._id);
-        setComments(response.data.data || []);
+        setComments(comments || []);
       } catch (error) {
         console.error("Error fetching comments:", error);
         setComments([]);
@@ -169,6 +175,6 @@ const TweetCard = ({ tweet, onDeleteTweet }) => {
       </div>
     </div>
   );
-};
+});
 
 export default TweetCard;

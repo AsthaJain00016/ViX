@@ -1,15 +1,13 @@
-import { useState, } from "react";
-import { changeCurrentPassword, logoutUser } from "../../api/user.api";
+import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import {useNavigate} from "react-router-dom"
+import { updateUserAccount } from "../../api/user.api";
 
-const ChangePasswordModal = ({ onClose }) => {
-  const { setUser } = useAuth();
+const UpdateUserAccountModal = ({ onClose }) => {
+  const { user, setUser } = useAuth();
 
-  const navigate= useNavigate()
   const [form, setForm] = useState({
-    oldPassword: "",
-    newPassword: ""
+    fullName: user?.fullName || "",
+    email: user?.email || "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -24,17 +22,11 @@ const ChangePasswordModal = ({ onClose }) => {
       setLoading(true);
       setError("");
 
-      await changeCurrentPassword(form);
-
-      // logout after password change
-      await logoutUser();
-      setUser(null);
-
+      const updatedUser = await updateUserAccount(form);
+      setUser(updatedUser);
       onClose();
-      navigate("/")
-      alert("Password changed. Please login again.");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to change password");
+      setError(err.response?.data?.message || "Update failed");
     } finally {
       setLoading(false);
     }
@@ -43,24 +35,27 @@ const ChangePasswordModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="relative bg-[#111] p-6 rounded-xl w-96 border border-gray-800">
-        <h2 className="text-lg font-semibold mb-4">Change Password</h2>
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      <div className="relative bg-[#111] p-6 rounded-xl w-96 border border-gray-800">
+        <h2 className="text-lg font-semibold mb-4">Update Account Details</h2>
+
+        {error && (
+          <p className="text-red-500 text-sm mb-3">{error}</p>
+        )}
 
         <input
-          type="password"
-          name="oldPassword"
-          placeholder="Current password"
+          name="fullName"
+          value={form.fullName}
           onChange={handleChange}
+          placeholder="Full Name"
           className="w-full mb-3 bg-black border border-gray-700 px-3 py-2 rounded"
         />
 
         <input
-          type="password"
-          name="newPassword"
-          placeholder="New password"
+          name="email"
+          value={form.email}
           onChange={handleChange}
+          placeholder="Email"
           className="w-full mb-4 bg-black border border-gray-700 px-3 py-2 rounded"
         />
 
@@ -69,11 +64,11 @@ const ChangePasswordModal = ({ onClose }) => {
           disabled={loading}
           className="w-full bg-purple-600 py-2 rounded"
         >
-          {loading ? "Updating..." : "Update Password"}
+          {loading ? "Updating..." : "Save Changes"}
         </button>
       </div>
     </div>
   );
 };
 
-export default ChangePasswordModal;
+export default UpdateUserAccountModal;

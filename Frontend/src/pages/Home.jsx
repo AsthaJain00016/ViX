@@ -25,7 +25,7 @@ const Home=()=>{
 
     return(
         <Layout>
-            { loading?(<div className="text-gray-400"></div>):(<VideoGrid videos={videos}/>) }
+            { loading?(<div className="text-gray-400"></div>):(<VideoGrid  videos={videos}/>) }
         </Layout>
     )
 }

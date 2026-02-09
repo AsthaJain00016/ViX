@@ -1,0 +1,3 @@
+- [x] Fix the 'user' variable in Tweet.jsx to properly destructure from useAuth()
+- [x] Update useEffect in Tweet.jsx to always call loadTweets() without conditions
+- [x] Verify that all tweets from all users are visible

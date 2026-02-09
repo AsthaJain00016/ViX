@@ -11,11 +11,12 @@
 
 import { useState, useEffect } from "react";
 import TweetCard from "../components/profile/TweetCard";
-import { fetchUserTweets,createTweet,deleteTweet } from "../api/tweet.api";
+import { allTweets,createTweet,deleteTweet } from "../api/tweet.api";
 // import { useAuth } from "../../context/AuthContext";
 import { useAuth } from "../context/AuthContext";
+import Layout from "../components/Layout/Layout";
 
-const ChannelTweets = ({ userId }) => {
+const Tweets = ({ userId }) => {
   const { user } = useAuth();
   const [tweets, setTweets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,7 @@ const ChannelTweets = ({ userId }) => {
 
   const loadTweets = async () => {
     try {
-      const response = await fetchUserTweets(userId || user._id);
+      const response = await allTweets();
       setTweets(response.data.data || []);
     } catch (error) {
       console.error("Error fetching tweets:", error);
@@ -33,10 +34,8 @@ const ChannelTweets = ({ userId }) => {
   };
 
   useEffect(() => {
-    if (userId || user._id) {
-      loadTweets().finally(() => setLoading(false));
-    }
-  }, [userId, user._id]);
+    loadTweets().finally(() => setLoading(false));
+  }, []);
 
   const handleCreateTweet = async () => {
     if (!newTweet.trim()) return;
@@ -73,6 +72,7 @@ const ChannelTweets = ({ userId }) => {
   }
 
   return (
+    <Layout>
     <div className="max-w-3xl mx-auto mt-6 space-y-6">
       {/* Create Tweet Form */}
       <div className="bg-[#111] border border-gray-800 rounded-xl p-4">
@@ -114,7 +114,8 @@ const ChannelTweets = ({ userId }) => {
         ))
       )}
     </div>
+    </Layout>
   );
 };
 
-export default ChannelTweets;
+export default Tweets;

@@ -14,3 +14,7 @@ export const updateTweet=(tweetId)=>{
 export const deleteTweet=(tweetId)=>{
     return api.delete(`/tweets/${tweetId}`)
 }
+
+export const allTweets=()=>{
+    return api.get(`tweets/allTweets`)
+}

@@ -1,6 +1,34 @@
+import { useEffect, useState } from "react";
 import { fetchChannelSubscribers } from "../../api/subscription.api";
+import { useAuth } from "../../context/AuthContext";
+import FollowButton from "../common/FollowButton";
 const VideoMeta = ({video}) => {
-  
+  const { user } = useAuth();
+  const [subscribers, setSubscribers] = useState(0);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const subs = await fetchChannelSubscribers(video.owner._id);
+        setSubscribers(subs);
+        if (user) {
+          const { fetchSubscribedChannels } = await import("../../api/subscription.api");
+          const subscribedChannels = await fetchSubscribedChannels(user._id);
+          const isSub = subscribedChannels.some(channel => channel._id === video.owner._id);
+          setIsSubscribed(isSub);
+        }
+      } catch (error) {
+        console.error("Error fetching subscribers:", error);
+      }
+    };
+    fetchData();
+  }, [video.owner._id, user]);
+
+  const handleSubscriptionChange = (newSubscribed) => {
+    setIsSubscribed(newSubscribed);
+    setSubscribers(prev => newSubscribed ? prev + 1 : prev - 1);
+  };
 
   return (
     <div className="mt-4 text-white">
@@ -22,11 +50,13 @@ const VideoMeta = ({video}) => {
           />
           <div>
             <p className="font-medium">{video.owner.username}</p>
-            <p className="text-xs text-gray-400">{/*Subscribers*/}</p>
+            <p className="text-xs text-gray-400">{subscribers} Subscribers</p>
           </div>
-          <button className="ml-4 bg-purple-600 px-4 py-1.5 rounded-md text-sm">
-            Follow
-          </button>
+          <FollowButton
+            channelId={video.owner._id}
+            isSubscribedInitially={isSubscribed}
+            onChange={handleSubscriptionChange}
+          />
         </div>
 
         {/* Actions */}

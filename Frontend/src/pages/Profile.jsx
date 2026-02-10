@@ -25,6 +25,11 @@ const Profile=()=>{
             response()
         }
     },[user])
+
+    const handleSubscriptionChange = (isSubscribed) => {
+        setSubscribers(prev => isSubscribed ? prev + 1 : prev - 1);
+    };
+
     const [activeTab,setActiveTab]=useState("Following")
 
     if (loading) return <Layout><div className="text-white">Loading...</div></Layout>;
@@ -34,7 +39,7 @@ const Profile=()=>{
         <Layout>
         <div className="text-white">
             <ChannelBanner coverImage={user.coverImage}  />
-            <ChannelHeader user={user} subscribers={subscribers} channels={channels}/>
+            <ChannelHeader user={user} subscribers={subscribers} channels={channels} isSubscribed={false} onChange={handleSubscriptionChange}/>
             <ChannelTabs active={activeTab} setActive={setActiveTab}/>
             {activeTab==="Videos" && <ChannelVideoGrid/>}
             {activeTab==="Playlists"}

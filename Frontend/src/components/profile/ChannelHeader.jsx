@@ -1,6 +1,8 @@
-const ChannelHeader = ({user, subscribers, channels}) => {
+import FollowButton from "../common/FollowButton";
+
+const ChannelHeader = ({user, subscribers, channels,isSubscribed, onChange}) => {
   console.log("DATTA",subscribers,channels)
-  
+
 
   return (
     <div className="flex items-center justify-between mt-6">
@@ -20,9 +22,11 @@ const ChannelHeader = ({user, subscribers, channels}) => {
         </div>
       </div>
 
-      <button className="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-lg text-white">
-        Follow
-      </button>
+      <FollowButton
+      channelId={user._id}
+      isSubscribedInitially={isSubscribed}
+      onChange={onChange}
+      />
     </div>
   );
 };

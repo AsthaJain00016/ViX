@@ -65,9 +65,30 @@ const Tweets = ({ userId }) => {
 
   if (loading) {
     return (
-      <div className="max-w-3xl mx-auto mt-6">
-        <div className="text-white text-center">Loading tweets...</div>
-      </div>
+      <Layout>
+        <div className="max-w-3xl mx-auto mt-6">
+          <div className="text-white text-center">Loading tweets...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Layout>
+        <div className="max-w-3xl mx-auto mt-6 space-y-6">
+          <div className="bg-[#111] border border-gray-800 rounded-xl p-8 text-center">
+            <h2 className="text-white text-xl font-semibold mb-4">Please Log In</h2>
+            <p className="text-gray-400 mb-6">You need to be logged in to add and see tweets.</p>
+            <button
+              onClick={() => window.location.href = '/login'} // Assuming login route exists
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full font-semibold"
+            >
+              Log In
+            </button>
+          </div>
+        </div>
+      </Layout>
     );
   }
 
@@ -78,7 +99,7 @@ const Tweets = ({ userId }) => {
       <div className="bg-[#111] border border-gray-800 rounded-xl p-4">
         <div className="flex gap-4">
           <img
-            src={user.avatar || "https://i.pravatar.cc/150?img=32"}
+            src={user?.avatar || "https://i.pravatar.cc/150?img=32"}
             alt="avatar"
             className="w-12 h-12 rounded-full"
           />

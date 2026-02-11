@@ -63,3 +63,8 @@ export const fetchUserChannelProfile=async(username)=>{
 export const fetchWatchHistory=async()=>{
     return await api.get(`/users/watch-history`)
 }
+
+export const fetchUserById=async(id)=>{
+    const res= await api.get(`/users/user/${id}`)
+    return res.data.data
+}

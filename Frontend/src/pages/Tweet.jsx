@@ -16,7 +16,7 @@ import { allTweets,createTweet,deleteTweet } from "../api/tweet.api";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout/Layout";
 
-const Tweets = ({ userId }) => {
+const Tweets = () => {
   const { user } = useAuth();
   const [tweets, setTweets] = useState([]);
   const [loading, setLoading] = useState(true);

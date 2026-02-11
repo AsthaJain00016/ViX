@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toggleSubscription } from "../../api/subscription.api";
 import { useAuth } from "../../context/AuthContext";
 
@@ -7,10 +7,14 @@ const FollowButton=({
     isSubscribedInitially,
     onChange
 })=>{
-    const {user}=useAuth();
+    const {user, setSubscriptionRefreshKey}=useAuth();
 
     const [isSubscribed,setIsSubscribed]=useState(isSubscribedInitially);
     const [loading,setLoading]=useState(false);
+
+    useEffect(() => {
+        setIsSubscribed(isSubscribedInitially);
+    }, [isSubscribedInitially]);
 
     if (channelId === user?._id) {
         return null; // Hide button for self-subscription
@@ -32,6 +36,7 @@ const FollowButton=({
             }
 
             await toggleSubscription(channelId)
+            setSubscriptionRefreshKey(prev => prev + 1);
         }catch(err){
             // Revert on error
             const reverted = !isSubscribed;

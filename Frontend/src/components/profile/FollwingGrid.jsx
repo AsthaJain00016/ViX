@@ -25,7 +25,7 @@ const FollowingGrid = () => {
         <div className="text-white text-xl border p-2 absolute right-150 bottom-18 bg-purple-800 rounded-xl">You are not following anyone!</div>
       ) : (
         followers.map((user) => (
-          <FollowingCard key={user.id} user={user} />
+          <FollowingCard key={user._id} user={user} />
         ))
       )}
     </div>

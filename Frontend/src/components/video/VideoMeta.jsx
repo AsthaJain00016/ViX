@@ -3,7 +3,7 @@ import { fetchChannelSubscribers } from "../../api/subscription.api";
 import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
 const VideoMeta = ({video}) => {
-  const { user } = useAuth();
+  const { user, subscriptionRefreshKey } = useAuth();
   const [subscribers, setSubscribers] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -15,15 +15,20 @@ const VideoMeta = ({video}) => {
         if (user) {
           const { fetchSubscribedChannels } = await import("../../api/subscription.api");
           const subscribedChannels = await fetchSubscribedChannels(user._id);
-          const isSub = subscribedChannels.some(channel => channel._id === video.owner._id);
-          setIsSubscribed(isSub);
+          if (Array.isArray(subscribedChannels)) {
+            const isSub = subscribedChannels.some(subscription => subscription.channel._id === video.owner._id);
+            setIsSubscribed(isSub);
+          } else {
+            console.warn("Subscribed channels data is not an array:", subscribedChannels);
+            setIsSubscribed(false);
+          }
         }
       } catch (error) {
         console.error("Error fetching subscribers:", error);
       }
     };
     fetchData();
-  }, [video.owner._id, user]);
+  }, [video.owner._id, user, subscriptionRefreshKey]);
 
   const handleSubscriptionChange = (newSubscribed) => {
     setIsSubscribed(newSubscribed);

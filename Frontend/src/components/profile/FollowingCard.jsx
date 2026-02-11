@@ -1,24 +1,33 @@
+import { fetchChannelSubscribers } from "../../api/subscription.api";
+import FollowButton from "../common/FollowButton";
+
 const FollowingCard = ({ user }) => {
+  const fetchFollowers=async()=>{
+   return await fetchChannelSubscribers(user.channel._id)
+  }
+  const followers=fetchFollowers();
+  console.log("followes: ",followers)
   return (
     <div className="bg-[#111] border border-gray-800 rounded-xl p-4 hover:bg-[#161616] transition">
       <div className="flex items-center gap-4">
         <img
-          src={user.avatar}
+          src={user.channel.avatar}
           alt={user.name}
           className="w-14 h-14 rounded-full object-cover"
         />
 
         <div className="flex-1">
-          <h3 className="font-semibold text-white">{user.name}</h3>
-          <p className="text-sm text-gray-400">@{user.username}</p>
+          <h3 className="font-semibold text-white">@{user.channel.username}</h3>
+          {console.log(user)}
           <p className="text-xs text-gray-500 mt-1">
-            {user.followers} followers
+            {followers} followers
           </p>
         </div>
 
         <button className="px-4 py-1.5 text-sm rounded-full bg-purple-600 hover:bg-purple-700 transition">
           Following
         </button>
+        {/* <FollowButton/> */}
       </div>
     </div>
   );

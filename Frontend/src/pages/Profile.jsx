@@ -44,7 +44,7 @@ const Profile=()=>{
             {activeTab==="Videos" && <ChannelVideoGrid/>}
             {activeTab==="Playlists"}
             {activeTab==="Tweets" && <ChannelTweets/>}
-            {activeTab === "Following" && <FollowingGrid />}
+            {activeTab === "Following" && <FollowingGrid userId={user._id} />}
 
 
         </div>

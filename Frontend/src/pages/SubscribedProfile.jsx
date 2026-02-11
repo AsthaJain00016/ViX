@@ -60,7 +60,7 @@ const SubscribedProfile = () => {
                 {activeTab === "Videos" && <ChannelVideoGrid />}
                 {activeTab === "Playlists" && <div>Playlists content here</div>}
                 {activeTab === "Tweets" && <ChannelTweets userId={id} />}
-                {activeTab === "Following" && <FollowingGrid />}
+                {activeTab === "Following" && <FollowingGrid userId={id} />}
             </div>
         </Layout>
     );

@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { fetchChannelSubscribers } from "../../api/subscription.api";
 import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
+import { useNavigate } from "react-router-dom";
 const VideoMeta = ({video}) => {
   const { user, subscriptionRefreshKey } = useAuth();
   const [subscribers, setSubscribers] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,10 +54,11 @@ const VideoMeta = ({video}) => {
           <img
             src={video.owner.avatar}
             className="w-10 h-10 rounded-full"
+            onClick={()=>(navigate(`/subscribed-profile/${video.owner._id}`))}
           />
           <div>
-            <p className="font-medium">{video.owner.username}</p>
-            <p className="text-xs text-gray-400">{subscribers} Subscribers</p>
+            <p className="font-medium" onClick={()=>(navigate(`/subscribed-profile/${video.owner._id}`))}>{video.owner.username}</p>
+            <p className="text-xs text-gray-400" onClick={()=>(navigate(`/subscribed-profile/${video.owner._id}`))}>{subscribers} Subscribers</p>
           </div>
           <FollowButton
             channelId={video.owner._id}

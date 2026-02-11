@@ -2,17 +2,29 @@ import { useEffect, useState } from "react";
 import FollowingCard from "./FollowingCard";
 import { useAuth } from "../../context/AuthContext";
 import { fetchSubscribedChannels } from "../../api/subscription.api";
+import { fetchUserById } from "../../api/user.api";
 
 
 
-const FollowingGrid = () => {
+const FollowingGrid = ({userId}) => {
+  console.log("User Id",userId)
   const [followers,setFollowers]=useState([])
-  const {user}=useAuth()
+  const [user,setUser]=useState("");
+  // const {user}=useAuth()
 
   useEffect(()=>{
-     if (user && user._id) {
+    //  if (user && user._id) {
+    //      const response=async()=>{
+    //       const data=await fetchSubscribedChannels(user._id);
+    //       setFollowers(data.channels)
+    //      }
+    //      response()
+    //  }
+     if (userId) {
          const response=async()=>{
-          const data=await fetchSubscribedChannels(user._id);
+          const data=await fetchSubscribedChannels(userId);
+          const user=await fetchUserById(userId)
+          setUser(user)
           setFollowers(data.channels)
          }
          response()
@@ -25,7 +37,7 @@ const FollowingGrid = () => {
         <div className="text-white text-xl border p-2 absolute right-150 bottom-18 bg-purple-800 rounded-xl">You are not following anyone!</div>
       ) : (
         followers.map((user) => (
-          <FollowingCard key={user._id} user={user} />
+          <FollowingCard key={user._id || userId} user={user} />
         ))
       )}
     </div>

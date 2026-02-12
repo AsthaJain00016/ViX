@@ -15,15 +15,9 @@ const VideoMeta = ({video}) => {
         const subs = await fetchChannelSubscribers(video.owner._id);
         setSubscribers(subs);
         if (user) {
-          const { fetchSubscribedChannels } = await import("../../api/subscription.api");
-          const subscribedChannels = await fetchSubscribedChannels(user._id);
-          if (Array.isArray(subscribedChannels)) {
-            const isSub = subscribedChannels.some(subscription => subscription.channel._id === video.owner._id);
-            setIsSubscribed(isSub);
-          } else {
-            console.warn("Subscribed channels data is not an array:", subscribedChannels);
-            setIsSubscribed(false);
-          }
+          const { checkSubscriptionStatus } = await import("../../api/subscription.api");
+          const isSub = await checkSubscriptionStatus(user._id, video.owner._id);
+          setIsSubscribed(isSub);
         }
       } catch (error) {
         console.error("Error fetching subscribers:", error);

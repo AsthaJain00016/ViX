@@ -3,6 +3,7 @@ import { useEffect , useState } from "react";
 import { searchAll } from "../api/search.api";
 import Layout from "../components/Layout/Layout";
 import SearchVideoList from "../components/video/SearchVideoList";
+import SearchProfile from "../components/profile/SearchProfile";
 
 const Search=()=>{
   const [params] = useSearchParams();
@@ -63,9 +64,11 @@ const Search=()=>{
         {results.users?.length > 0 && (
           <div>
             <h3 className="text-lg mb-2 mt-4">Users</h3>
-            {results.users.map(user=>(
-              <div key={user._id}> {user.username} </div>
-            ))}
+            <div className="space-y-2">
+              {results.users.map(user => (
+                <SearchProfile key={user._id} user={user} />
+              ))}
+            </div>
           </div>
         )}
       </div>

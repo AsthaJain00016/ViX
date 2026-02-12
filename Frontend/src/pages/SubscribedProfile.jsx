@@ -9,6 +9,7 @@ import FollowingGrid from "../components/profile/FollwingGrid";
 import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import { fetchUserById } from "../api/user.api";
+import { fetchAllVideos } from "../api/video.api";
 
 const SubscribedProfile = () => {
     const { loading: authLoading } = useAuth();
@@ -17,6 +18,9 @@ const SubscribedProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [subscribers, setSubscribers] = useState(0);
+    const [videos,setVideos]=useState(null)
+    const [loadingVideos, setLoadingVideos] = useState(true);
+
     const [channels, setChannels] = useState(0);
     console.log("ID ",id)
     useEffect(() => {
@@ -27,6 +31,14 @@ const SubscribedProfile = () => {
                 setUser(userData);
                 setSubscribers(userData.subscribersCount || 0);
                 setChannels(userData.channelSubscribedToCount || 0);
+
+                try{
+                    setLoadingVideos(true)
+                    const resVideos = await fetchAllVideos({ userId: id })
+                    setVideos(resVideos || [])
+                }finally{
+                    setLoadingVideos(false)
+                }
             } catch (err) {
                 console.error("Error fetching user:", err);
                 setError("Failed to load user profile");
@@ -57,7 +69,7 @@ const SubscribedProfile = () => {
                 <ChannelBanner coverImage={user.coverImage} />
                 <ChannelHeader user={user} subscribers={subscribers} channels={channels} isSubscribed={user.isSubscribed} onChange={handleSubscriptionChange} />
                 <ChannelTabs active={activeTab} setActive={setActiveTab} />
-                {activeTab === "Videos" && <ChannelVideoGrid />}
+                {activeTab === "Videos" && <ChannelVideoGrid videos={videos} loading={loadingVideos} isOwner={false} />}
                 {activeTab === "Playlists" && <div>Playlists content here</div>}
                 {activeTab === "Tweets" && <ChannelTweets userId={id} />}
                 {activeTab === "Following" && <FollowingGrid userId={id} />}

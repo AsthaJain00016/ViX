@@ -8,6 +8,7 @@ import LikedVideos from "./pages/LikedVideos"
 import History from "./pages/History"
 import Following from "./pages/Following"
 import Support from "./pages/Support"
+import Search from "./pages/Search"
 
 function App(){
     return(
@@ -23,6 +24,7 @@ function App(){
             <Route path="/History" element={<History/>} />
             <Route path="/Following" element={<Following/>} />
             <Route path="/Support" element={<Support/>} />
+            <Route path="/search" element={<Search/>} />
         </Routes>
         </BrowserRouter>
     )

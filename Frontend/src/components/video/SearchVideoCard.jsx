@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const SearchVideoCard=({video})=>{
+    const navigate=useNavigate()
     return(
-        <div className="flex gap-4 p-3 hover:bg-neutral-900 rounded-lg cursor-pointer transition duration-200">
+        <div className="flex gap-4 p-3 hover:bg-neutral-900 rounded-lg cursor-pointer transition duration-200"
+        onClick={()=>navigate(`/watch/${video._id}`)}
+        >
             <div className="relative w-90 min-w-90">
                 <img
                 src={video.thumbnail}
@@ -19,14 +24,14 @@ const SearchVideoCard=({video})=>{
                     {video.title}
                 </h3>
                 <p className="text-gray-400 text-xs">
-                    {video.views} . {video.time}
+                    {video.views} views
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                     <img
-                    src={video.channel.avatar}
+                    src={video.owner.avatar}
                     className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-gray-300 hover:text-white transition"> {video.channel.name} </span>
+                    <span className="text-gray-300 hover:text-white transition"> {video.owner.username} </span>
                 </div>
 
                 <p className="text-gray-400 line-clamp-2 mt-1"> {video.description} </p>

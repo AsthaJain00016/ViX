@@ -8,11 +8,18 @@ export default function Navbar(){
     const {user,loading}=useAuth()
     const [showLogin,setShowLogin]=useState(false)
     const [showRegister,setShowRegister]=useState(false)
+    const [query,setQuery]=useState("");
     const navigate=useNavigate()
 
     const handleProfileClick=()=>{
         navigate(`/profile/u/${user}`)
         console.log(user)
+    }
+
+    const handleSearch=(e)=>{
+        if(e.key==="Enter" && query.trim()){
+            navigate(`/search?q=${query}`);
+        }
     }
     if(loading) return null
     return (
@@ -23,6 +30,9 @@ export default function Navbar(){
             <input
             type="text"
             placeholder="Search"
+            value={query}
+            onChange={(e)=>setQuery(e.target.value)}
+            onKeyDown={handleSearch}
             className="w-125 bg-black border  border-white px-4 py-2 outline none "
             />
 

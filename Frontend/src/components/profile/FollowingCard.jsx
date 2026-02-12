@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchChannelSubscribers } from "../../api/subscription.api";
-import FollowButton from "../common/FollowButton";
 
 const FollowingCard = ({ user }) => {
   const navigate = useNavigate();

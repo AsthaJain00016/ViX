@@ -9,7 +9,6 @@ const menuItems=[
     "History",
     "Tweets",
     "Following",
-    "Followers"
 ]
 
 

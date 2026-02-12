@@ -7,7 +7,6 @@ import Tweet from "./pages/Tweet"
 import LikedVideos from "./pages/LikedVideos"
 import History from "./pages/History"
 import Following from "./pages/Following"
-import Followers from "./pages/Followers"
 import Support from "./pages/Support"
 
 function App(){
@@ -23,7 +22,6 @@ function App(){
             <Route path="/Liked Videos" element={<LikedVideos/>} />
             <Route path="/History" element={<History/>} />
             <Route path="/Following" element={<Following/>} />
-            <Route path="/Followers" element={<Followers/>} />
             <Route path="/Support" element={<Support/>} />
         </Routes>
         </BrowserRouter>

@@ -8,6 +8,7 @@ export const fetchSubscribedChannels=async(subscriberId)=>{
 export const fetchChannelSubscribers=async(channelId)=>{
     const res=await api.get(`/subscriptions/c/${channelId}`)
     return res.data.data
+    
 }
 
 export const toggleSubscription=(channelId)=>{

@@ -41,7 +41,7 @@ const Watch=()=>{
             <div className="col-span-8">
                 <VideoPlayer src={video.videoFile || ""}/>
                 <VideoMeta video={video}/>
-                <Comments videoId={videoId}/>
+                <Comments video={video}/>
             </div>
             <div className="col-span-4">
                 <SuggestedVideos/>

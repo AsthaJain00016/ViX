@@ -1,4 +1,0 @@
-- [x] Add getUserVideos function in ProjectInBackend/src/contollers/video.controller.js
-- [x] Add authenticated route /user/videos in ProjectInBackend/src/routes/video.routes.js
-- [x] Add fetchUserVideos function in Frontend/src/api/video.api.js
-- [x] Update Frontend/src/pages/Profile.jsx to fetch and set videos

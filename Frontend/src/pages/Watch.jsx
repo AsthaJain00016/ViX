@@ -27,28 +27,36 @@ const Watch=()=>{
 
         loadVideo()
     },[videoId])
-    if (loading) {
-    return (
-      <Layout>
-        <div className="text-gray-400">Loading video...</div>
-      </Layout>
-    );
-  }
+        if (loading) {
+        return (
+            <Layout>
+                <div className="text-gray-400">Loading video...</div>
+            </Layout>
+        );
+    }
 
-    return(
-        <Layout>
-        <div className="grid grid-cols-12 gap-6 p-6 text-white">
-            <div className="col-span-8">
-                <VideoPlayer src={video.videoFile || ""}/>
-                <VideoMeta video={video}/>
-                <Comments video={video}/>
-            </div>
-            <div className="col-span-4">
-                <SuggestedVideos/>
-            </div>
-        </div>
-        </Layout>
-    )
+    if (!video) {
+        return (
+            <Layout>
+                <div className="text-red-400">Unable to load video. Please check server and try again.</div>
+            </Layout>
+        );
+    }
+
+        return(
+                <Layout>
+                <div className="grid grid-cols-12 gap-6 p-6 text-white">
+                        <div className="col-span-8">
+                                <VideoPlayer src={video.videoFile || ""}/>
+                                <VideoMeta video={video}/>
+                                <Comments video={video}/>
+                        </div>
+                        <div className="col-span-4">
+                                <SuggestedVideos/>
+                        </div>
+                </div>
+                </Layout>
+        )
 }
 
 export default Watch

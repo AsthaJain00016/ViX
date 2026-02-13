@@ -11,8 +11,10 @@ const LikedVideos=()=>{
         const loadVideos=async()=>{
             try{
                 const result=await fetchLikedVideos()
-                console.log(result.data.data.data)
-                setVideos(result.data.data.data)
+                const items = result?.data?.data?.data || [];
+                // likes endpoint returns Like documents with a `video` field
+                const vids = items.map(i => i.video || i);
+                setVideos(vids)
             }catch(error){
                 console.error(error)
             }finally{

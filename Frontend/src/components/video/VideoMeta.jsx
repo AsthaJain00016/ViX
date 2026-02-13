@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchChannelSubscribers } from "../../api/subscription.api";
+import { likeVideo } from "../../api/like.api";
+import { toggleSaveVideo, checkVideoSaved } from "../../api/user.api";
 import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +9,12 @@ const VideoMeta = ({video}) => {
   const { user, subscriptionRefreshKey } = useAuth();
   const [subscribers, setSubscribers] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(video.likesCount || 0);
+  const [disliked, setDisliked] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [loadingLike, setLoadingLike] = useState(false);
+  const [loadingSave, setLoadingSave] = useState(false);
   const navigate=useNavigate()
 
   useEffect(() => {
@@ -26,9 +34,70 @@ const VideoMeta = ({video}) => {
     fetchData();
   }, [video.owner._id, user, subscriptionRefreshKey]);
 
+  useEffect(() => {
+    const checkSaved = async () => {
+      if (!user) return;
+      try {
+        const res = await checkVideoSaved(video._id);
+        // res may be { saved: true }
+        setSaved(res?.saved || false);
+      } catch (err) {
+        console.error("Error checking saved status", err);
+      }
+    };
+    checkSaved();
+  }, [video._id, user]);
+
   const handleSubscriptionChange = (newSubscribed) => {
     setIsSubscribed(newSubscribed);
     setSubscribers(prev => newSubscribed ? prev + 1 : prev - 1);
+  };
+
+  const handleLike = async () => {
+    if (!user) return alert('Please login to like videos');
+    try {
+      setLoadingLike(true);
+      await likeVideo(video._id);
+      if (liked) {
+        setLiked(false);
+        setLikeCount(prev => Math.max(0, prev - 1));
+      } else {
+        setLiked(true);
+        setLikeCount(prev => prev + 1);
+        if (disliked) setDisliked(false);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingLike(false);
+    }
+  };
+
+  const handleDislike = () => {
+    if (!user) return alert('Please login to dislike videos');
+    // Dislike is local toggle (backend not implemented)
+    if (disliked) setDisliked(false);
+    else {
+      setDisliked(true);
+      if (liked) {
+        setLiked(false);
+        setLikeCount(prev => Math.max(0, prev - 1));
+      }
+    }
+  };
+
+  const handleSave = async () => {
+    if (!user) return alert('Please login to save videos');
+    try {
+      setLoadingSave(true);
+      const res = await toggleSaveVideo(video._id);
+      // res may contain { saved: true }
+      setSaved(res?.saved === true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingSave(false);
+    }
   };
 
   return (
@@ -63,9 +132,28 @@ const VideoMeta = ({video}) => {
 
         {/* Actions */}
         <div className="flex gap-3">
-          <button className="px-3 py-1 bg-neutral-800 rounded">👍 2</button>
-          <button className="px-3 py-1 bg-neutral-800 rounded">👎</button>
-          <button className="px-3 py-1 bg-neutral-800 rounded">💾 Save</button>
+          <button
+            onClick={handleLike}
+            disabled={loadingLike}
+            className={`px-3 py-1 rounded ${liked ? 'bg-blue-600' : 'bg-neutral-800'}`}
+          >
+            👍 {likeCount}
+          </button>
+
+          <button
+            onClick={handleDislike}
+            className={`px-3 py-1 rounded ${disliked ? 'bg-blue-600' : 'bg-neutral-800'}`}
+          >
+            👎
+          </button>
+
+          <button
+            onClick={handleSave}
+            disabled={loadingSave}
+            className={`px-3 py-1 rounded ${saved ? 'bg-blue-600' : 'bg-neutral-800'}`}
+          >
+            {saved ? 'Saved' : '💾 Save'}
+          </button>
         </div>
       </div>
 

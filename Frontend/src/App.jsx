@@ -9,6 +9,7 @@ import History from "./pages/History"
 import Following from "./pages/Following"
 import Support from "./pages/Support"
 import Search from "./pages/Search"
+import SavedVideos from "./pages/SavedVideos"
 
 function App(){
     return(
@@ -23,6 +24,7 @@ function App(){
             <Route path="/Liked Videos" element={<LikedVideos/>} />
             <Route path="/History" element={<History/>} />
             <Route path="/Following" element={<Following/>} />
+            <Route path="/saved-videos" element={<SavedVideos/>} />
             <Route path="/Support" element={<Support/>} />
             <Route path="/search" element={<Search/>} />
         </Routes>

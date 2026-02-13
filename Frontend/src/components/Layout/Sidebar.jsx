@@ -9,6 +9,7 @@ const menuItems=[
     "History",
     "Tweets",
     "Following",
+    "Saved Videos"
 ]
 
 
@@ -23,18 +24,20 @@ export default function Sidebar(){
         <aside className="w-64 border-r border-white p-4 flex flex-col justify-between">
             <div className="space-y-3">
                 {
-                    menuItems.map(item=>(
-                        <button key={item}  className={`w-full text-left border border-white px-3 py-2  hover:text-black transition cursor-pointer 
+                    menuItems.map(item => {
+                        // Special-case saved videos path to avoid encoded spaces issues
+                        const path = item === 'Saved Videos' ? '/saved-videos' : `/${item}`;
+                        return (
+                            <button key={item}  className={`w-full text-left border border-white px-3 py-2  hover:text-black transition cursor-pointer 
               ${
                 active === item
                   ? "bg-purple-600 text-white"
                   : "text-gray-300 hover:bg-white hover:text-black"
-              }`} onClick={()=>(
-                navigate(`/${item}`)
-              )}>
-                            {item}
-                        </button>
-                    ))
+              }`} onClick={() => navigate(path)}>
+                                {item}
+                            </button>
+                        )
+                    })
                 }
             </div>
             <div className="space-y-3">

@@ -68,3 +68,18 @@ export const fetchUserById=async(id)=>{
     const res= await api.get(`/users/user/${id}`)
     return res.data.data
 }
+
+export const toggleSaveVideo=async(videoId)=>{
+    const res= await api.post(`/users/save/${videoId}`)
+    return res.data.data
+}
+
+export const checkVideoSaved=async(videoId)=>{
+    const res= await api.get(`/users/saved/check/${videoId}`)
+    return res.data.data
+}
+
+export const fetchSavedVideos=async(params = {})=>{
+    const res = await api.get(`/users/saved-videos`, { params })
+    return res.data.data
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ChannelHeader from "../components/profile/channelHeader";
 import ChannelTabs from "../components/profile/channelTabs";
 import ChannelVideoGrid from "../components/profile/ChannelVideoGrid";
+import PlaylistGrid from "../components/profile/PlaylistGrid";
 import ChannelBanner from "../components/profile/channelBanner";
 import Layout from "../components/Layout/Layout";
 
@@ -46,7 +47,7 @@ const Profile=()=>{
         setSubscribers(prev => isSubscribed ? prev + 1 : prev - 1);
     };
 
-    const [activeTab,setActiveTab]=useState("Following")
+    const [activeTab,setActiveTab]=useState("Videos")
 
     if (loading) return <Layout><div className="text-white">Loading...</div></Layout>;
     if (!user) return <Layout><div className="text-white">Please log in to view your profile.</div></Layout>;
@@ -58,7 +59,7 @@ const Profile=()=>{
             <ChannelHeader user={user} subscribers={subscribers} channels={channels} isSubscribed={false} onChange={handleSubscriptionChange}/>
             <ChannelTabs active={activeTab} setActive={setActiveTab}/>
             {activeTab==="Videos" && <ChannelVideoGrid videos={videos} loading={loadingVideos} isOwner={true} onRefresh={loadVideos} />}
-            {activeTab==="Playlists"}
+            {activeTab==="Playlists" && <PlaylistGrid userId={user._id} isOwner={true} onRefresh={loadVideos} />}
             {activeTab==="Tweets" && <ChannelTweets/>}
             {activeTab === "Following" && <FollowingGrid userId={user._id} />}
 

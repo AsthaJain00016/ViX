@@ -4,6 +4,7 @@ import { likeVideo } from "../../api/like.api";
 import { toggleSaveVideo, checkVideoSaved } from "../../api/user.api";
 import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
+import AddToPlaylist from "./AddToPlaylist";
 import { useNavigate } from "react-router-dom";
 const VideoMeta = ({video}) => {
   const { user, subscriptionRefreshKey } = useAuth();
@@ -131,7 +132,7 @@ const VideoMeta = ({video}) => {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={handleLike}
             disabled={loadingLike}
@@ -154,6 +155,8 @@ const VideoMeta = ({video}) => {
           >
             {saved ? 'Saved' : '💾 Save'}
           </button>
+
+          <AddToPlaylist videoId={video._id} className="text-sm" />
         </div>
       </div>
 

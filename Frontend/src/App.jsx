@@ -10,6 +10,7 @@ import Following from "./pages/Following"
 import Support from "./pages/Support"
 import Search from "./pages/Search"
 import SavedVideos from "./pages/SavedVideos"
+import Playlist from "./pages/Playlist"
 
 function App(){
     return(
@@ -17,6 +18,7 @@ function App(){
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path='/Home' element={<Home/>} />
+            <Route path="/profile" element={<Profile/>}/>
             <Route path="/watch/:videoId" element={<Watch/>} />
             <Route path="/profile/u/:user" element={<Profile/>}/>
             <Route path="/subscribed-profile/:id" element={<SubscribedProfile/>}/>
@@ -25,6 +27,7 @@ function App(){
             <Route path="/History" element={<History/>} />
             <Route path="/Following" element={<Following/>} />
             <Route path="/saved-videos" element={<SavedVideos/>} />
+            <Route path="/playlist/:playlistId" element={<Playlist/>} />
             <Route path="/Support" element={<Support/>} />
             <Route path="/search" element={<Search/>} />
         </Routes>

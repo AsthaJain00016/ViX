@@ -11,6 +11,7 @@ const ChannelHeader = ({user, subscribers, channels,isSubscribed, onChange}) => 
           src={user?.avatar || null}
           alt="avatar"
           className="w-28 h-28 rounded-full border-4 border-black"
+          
         />
 
         <div>

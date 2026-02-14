@@ -1,0 +1,186 @@
+/* Title Generator Styles */
+.title-generator-container {
+    position: relative;
+}
+
+.generate-title-btn {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.generate-title-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.generate-title-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Title Generator Panel */
+.title-generator-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 340px;
+    max-height: 380px;
+    margin-top: 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.generator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px 12px 0 0;
+}
+
+.generator-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Titles List */
+.titles-list {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    background: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.loading,
+.no-titles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #888;
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+}
+
+.title-option {
+    padding: 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: #ddd;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.title-option:hover {
+    background: #252525;
+    border-color: #667eea;
+    transform: translateX(4px);
+}
+
+.title-text {
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.use-icon {
+    flex-shrink: 0;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Regenerate Button */
+.regenerate-btn {
+    padding: 12px 14px;
+    margin: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.regenerate-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.regenerate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Scrollbar */
+.titles-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.titles-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.titles-list::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+
+.titles-list::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}

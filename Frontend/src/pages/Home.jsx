@@ -10,7 +10,7 @@ const Home=()=>{
     useEffect(()=>{
         const loadVideos=async()=>{
             try{
-                const result=await fetchAllVideos();
+                const result=await fetchAllVideos({ limit: 100 });
                 setVideos(result)
             }catch(error){
                 console.error(error)

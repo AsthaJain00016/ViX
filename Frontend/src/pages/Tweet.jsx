@@ -11,6 +11,7 @@
 
 import { useState, useEffect } from "react";
 import TweetCard from "../components/profile/TweetCard";
+import TweetImprover from "../components/ai/TweetImprover";
 import { allTweets,createTweet,deleteTweet } from "../api/tweet.api";
 // import { useAuth } from "../../context/AuthContext";
 import { useAuth } from "../context/AuthContext";
@@ -111,7 +112,11 @@ const Tweets = () => {
               className="w-full bg-transparent text-white placeholder-gray-500 resize-none outline-none"
               rows={3}
             />
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-between items-center mt-4">
+              <TweetImprover 
+                tweetContent={newTweet}
+                onUseImproved={(improvedTweet) => setNewTweet(improvedTweet)}
+              />
               <button
                 onClick={handleCreateTweet}
                 disabled={posting || !newTweet.trim()}

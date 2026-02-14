@@ -1,0 +1,192 @@
+/* Tweet Improver Styles */
+.tweet-improver-container {
+    position: relative;
+}
+
+.improve-tweet-btn {
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.improve-tweet-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.improve-tweet-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Improver Panel */
+.tweet-improver-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 340px;
+    margin-top: 8px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.improver-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px 10px 0 0;
+}
+
+.improver-header h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.improver-content {
+    padding: 14px;
+    background: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.original-tweet,
+.improved-tweet {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.original-tweet label,
+.improved-tweet label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+}
+
+.original-tweet p,
+.improved-tweet p {
+    margin: 0;
+    padding: 10px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #ddd;
+    font-size: 12px;
+    line-height: 1.4;
+    min-height: 50px;
+    word-wrap: break-word;
+}
+
+.loading {
+    padding: 10px;
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    font-size: 12px;
+}
+
+.improver-actions {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #333;
+    background: #0f0f0f;
+    border-radius: 0 0 10px 10px;
+}
+
+.refresh-btn,
+.use-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.refresh-btn {
+    background: #333;
+    color: white;
+}
+
+.refresh-btn:hover:not(:disabled) {
+    background: #444;
+}
+
+.use-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.use-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.refresh-btn:disabled,
+.use-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Scrollbar */
+.improver-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.improver-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.improver-content::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 2px;
+}

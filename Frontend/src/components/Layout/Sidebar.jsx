@@ -14,7 +14,7 @@ const menuItems=[
 
 
 
-export default function Sidebar(){
+export default function Sidebar({ onAIChatClick }){
     const [openSettings,setOpenSettings]=useState(false)
     const navigate=useNavigate()
     const location = useLocation()
@@ -41,6 +41,7 @@ export default function Sidebar(){
                 }
             </div>
             <div className="space-y-3">
+                <button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer" onClick={() => onAIChatClick()}>💬 Chat with AI</button>
                 <button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer" onClick={()=>navigate("/Support")}>Support</button>
                 {user &&(<button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer" onClick={() => setOpenSettings(true)}
 >Settings</button>)}

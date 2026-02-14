@@ -1,5 +1,6 @@
 import { useState } from "react";
 import VideoGrid from "../video/VideoGrid";
+import TitleGenerator from "../ai/TitleGenerator";
 import { publishVideo } from "../../api/video.api";
 
 const ChannelVideoGrid = ({ videos, loading, isOwner = false, onRefresh }) => {
@@ -9,6 +10,7 @@ const ChannelVideoGrid = ({ videos, loading, isOwner = false, onRefresh }) => {
   const [videoFile, setVideoFile] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [topic, setTopic] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,13 +50,19 @@ const ChannelVideoGrid = ({ videos, loading, isOwner = false, onRefresh }) => {
           </button>
           {showForm && (
             <form onSubmit={handleSubmit} className="mt-3 p-4 bg-gray-800 rounded">
-              <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full mb-2 p-2 bg-gray-900 text-white rounded"
-              />
+              <div className="flex gap-2 mb-2 items-end">
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="flex-1 p-2 bg-gray-900 text-white rounded"
+                />
+                <TitleGenerator 
+                  topic={title || topic}
+                  onSelectTitle={(selectedTitle) => setTitle(selectedTitle)}
+                />
+              </div>
               <textarea
                 placeholder="Description"
                 value={description}

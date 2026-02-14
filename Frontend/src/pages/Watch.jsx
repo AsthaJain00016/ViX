@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { fetchVideoById } from "../api/video.api";
+import { addToWatchHistory } from "../api/user.api";
 
 const Watch=()=>{
     const {videoId}=useParams();
@@ -20,6 +21,13 @@ const Watch=()=>{
                 const res=await fetchVideoById(videoId)
                 console.log(res)
                 setVideo(res.data.data)
+                
+                // Add video to watch history
+                try {
+                    await addToWatchHistory(videoId);
+                } catch (error) {
+                    console.error("Failed to add to watch history:", error);
+                }
             }catch(error){
                 console.error(error)
             }

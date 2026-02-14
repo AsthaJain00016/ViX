@@ -64,6 +64,10 @@ export const fetchWatchHistory=async()=>{
     return await api.get(`/users/watch-history`)
 }
 
+export const addToWatchHistory=async(videoId)=>{
+    return await api.post(`/users/watch-history/${videoId}`)
+}
+
 export const fetchUserById=async(id)=>{
     const res= await api.get(`/users/user/${id}`)
     return res.data.data

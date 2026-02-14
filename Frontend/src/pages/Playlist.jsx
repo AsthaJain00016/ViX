@@ -71,7 +71,7 @@ const PlaylistView = () => {
     <Layout>
       <div className="text-white">
         {/* Playlist Header */}
-        <div className="bg-gradient-to-b from-gray-900 to-gray-800 p-6 rounded-lg mb-6">
+        <div className="bg-linear-to-b from-gray-900 to-gray-800 p-6 rounded-lg mb-6">
           <h1 className="text-4xl font-bold mb-2">{playlist.name}</h1>
           <p className="text-gray-400 mb-4">{playlist.description}</p>
           <div className="flex items-center gap-4">
@@ -110,7 +110,7 @@ const PlaylistView = () => {
                   }}
                 >
                   <div 
-                    className="flex-shrink-0 w-32 h-20 bg-gray-900 rounded relative overflow-hidden"
+                    className="shrink-0 w-32 h-20 bg-gray-900 rounded relative overflow-hidden"
                     onClick={() => handlePlayVideo(video._id)}
                   >
                     <img

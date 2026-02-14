@@ -64,7 +64,7 @@ const Watch=()=>{
                                 <Comments video={video}/>
                         </div>
                         <div className="col-span-4">
-                                <SuggestedVideos/>
+                                <SuggestedVideos currentVideoId={videoId}/>
                         </div>
                 </div>
                 </Layout>

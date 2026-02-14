@@ -34,7 +34,7 @@ export const getCurrentUser=async()=>{
     return await api.get(`/users/current-user`)
 }
 export const updateUserAccount=async(data)=>{
-    return await api.patch(`/users/update-account`)
+    return await api.patch(`/users/update-account`, data)
 }
 
 

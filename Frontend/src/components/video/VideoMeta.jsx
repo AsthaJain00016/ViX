@@ -6,6 +6,10 @@ import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
 import AddToPlaylist from "./AddToPlaylist";
 import { useNavigate } from "react-router-dom";
+import { FormatDuration } from "../common/FormatDuration";
+import LikedIcon from '../../assets/like.png'
+import dislikeIcon from '../../assets/dislike.png'
+import savedIcon from '../../assets/SavedVideos.png'
 const VideoMeta = ({ video }) => {
   const { user, subscriptionRefreshKey } = useAuth();
   const [subscribers, setSubscribers] = useState(0);
@@ -108,7 +112,7 @@ const VideoMeta = ({ video }) => {
       </h1>
 
       <p className="text-gray-400 text-sm mt-1">
-        {video.views} views . {video.duration}
+        {video.views} views . {FormatDuration(video.duration)}
       </p>
 
       {/* Channel + Actions */}
@@ -138,22 +142,22 @@ const VideoMeta = ({ video }) => {
             disabled={loadingLike}
             className={`px-3 py-1 rounded ml-1 ${liked ? 'bg-blue-600' : 'bg-neutral-800'}`}
           >
-            👍 {likeCount}
+          <img src={LikedIcon} alt="Like" className="w-5 h-5 invert-100 " /> {likeCount}
           </button>
 
           <button
             onClick={handleDislike}
             className={`px-3 py-1 rounded ${disliked ? 'bg-blue-600' : 'bg-neutral-800'}`}
           >
-            👎
+            <img src={dislikeIcon} alt="dislike" className="w-5 h-5 invert-100" />
           </button>
 
           <button
             onClick={handleSave}
             disabled={loadingSave}
-            className={`px-3 py-1 rounded ${saved ? 'bg-blue-600' : 'bg-neutral-800'}`}
+            className={`px-3 py-1 rounded bg-neutral-800`}
           >
-            {saved ? 'Saved' : '💾 Save'}
+            {saved ? <img src={savedIcon} alt=""  className="w-5 h-5"/>: "save" }
           </button>
 
           <AddToPlaylist videoId={video._id} className="text-sm" />

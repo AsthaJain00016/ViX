@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { deleteVideoById } from "../../api/video.api";
+import { FormatDuration } from "../common/FormatDuration";
 
 export default function VideoCard({ video, isOwner = false, onRefresh }) {
     const navigate = useNavigate()
@@ -27,7 +28,7 @@ export default function VideoCard({ video, isOwner = false, onRefresh }) {
                 />
 
                 <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-0.5 rounded">
-                    {video.duration}</span>
+                    {FormatDuration(video.duration)}</span>
 
             </div>
 
@@ -40,7 +41,7 @@ export default function VideoCard({ video, isOwner = false, onRefresh }) {
                 <div>
                     <h3 className="text-sm text-white font-semibold  line-clamp-2">{video.title}</h3>
                     <p className="text-xs text-gray-400 mt-1"> {video.owner.username} </p>
-                    <p className="text-xs text-gray-400 mt-1"> {video.views}  </p>
+                    <p className="text-xs text-gray-400 mt-1"> {video.views} Views    </p>
                 </div>
             </div>
 

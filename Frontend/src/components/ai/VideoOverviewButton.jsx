@@ -24,7 +24,7 @@ const VideoOverviewButton = ({ videoId, videoTitle }) => {
 
     return (
         <div className="video-overview-button-container">
-            <button 
+            <button
                 className="video-overview-btn"
                 onClick={() => {
                     if (!isOpen && !overview) {
@@ -41,7 +41,7 @@ const VideoOverviewButton = ({ videoId, videoTitle }) => {
                 <div className="video-overview-panel">
                     <div className="overview-header">
                         <h3>Video Overview</h3>
-                        <button 
+                        <button
                             className="close-btn"
                             onClick={() => setIsOpen(false)}
                         >
@@ -61,7 +61,7 @@ const VideoOverviewButton = ({ videoId, videoTitle }) => {
                         )}
                     </div>
 
-                    <button 
+                    <button
                         className="refresh-btn"
                         onClick={handleGetOverview}
                         disabled={isLoading}

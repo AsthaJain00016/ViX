@@ -27,7 +27,7 @@ const ChangeAvatarModal = ({ onClose }) => {
   };
 
   return (
-   
+
 
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
@@ -36,16 +36,16 @@ const ChangeAvatarModal = ({ onClose }) => {
 
 
         <input
-         type="file"
-         name="avatar"
-       accept="image/*"
-        onChange={(e) => setAvatar(e.target.files[0])}
-        className="w-full mb-4 bg-black border border-gray-700 px-3 py-2 rounded"
-      />
-          <button onClick={handleSubmit} disabled={loading} className="w-full bg-purple-600 py-2 rounded">
-        {loading ? "Uploading..." : "Update Avatar"}
-      </button>
-    
+          type="file"
+          name="avatar"
+          accept="image/*"
+          onChange={(e) => setAvatar(e.target.files[0])}
+          className="w-full mb-4 bg-black border border-gray-700 px-3 py-2 rounded"
+        />
+        <button onClick={handleSubmit} disabled={loading} className="w-full bg-purple-600 py-2 rounded">
+          {loading ? "Uploading..." : "Update Avatar"}
+        </button>
+
       </div>
     </div>
   );

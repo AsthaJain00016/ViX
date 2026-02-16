@@ -31,7 +31,7 @@ const TitleGenerator = ({ topic, onSelectTitle }) => {
 
     return (
         <div className="title-generator-container">
-            <button 
+            <button
                 className="generate-title-btn"
                 onClick={() => {
                     if (!isOpen && titles.length === 0) {
@@ -49,7 +49,7 @@ const TitleGenerator = ({ topic, onSelectTitle }) => {
                 <div className="title-generator-panel">
                     <div className="generator-header">
                         <h3>Title Suggestions</h3>
-                        <button 
+                        <button
                             className="close-btn"
                             onClick={() => setIsOpen(false)}
                         >
@@ -77,7 +77,7 @@ const TitleGenerator = ({ topic, onSelectTitle }) => {
                         )}
                     </div>
 
-                    <button 
+                    <button
                         className="regenerate-btn"
                         onClick={handleGenerateTitle}
                         disabled={isLoading}

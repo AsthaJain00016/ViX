@@ -1,12 +1,12 @@
 import { useState, } from "react";
 import { changeCurrentPassword, logoutUser } from "../../api/user.api";
 import { useAuth } from "../../context/AuthContext";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const ChangePasswordModal = ({ onClose }) => {
   const { setUser } = useAuth();
 
-  const navigate= useNavigate()
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     oldPassword: "",
     newPassword: ""

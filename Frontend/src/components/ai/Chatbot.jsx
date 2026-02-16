@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { 
-    chatWithAI, 
-    getVideoOverview, 
-    getVideoRecommendations, 
-    writeTweet, 
-    generateVideoTitle, 
-    improveTweet 
+import {
+    chatWithAI,
+    getVideoOverview,
+    getVideoRecommendations,
+    writeTweet,
+    generateVideoTitle,
+    improveTweet
 } from '../../api/ai.api';
 import './Chatbot.css';
 
@@ -173,8 +173,8 @@ const Chatbot = () => {
     return (
         <>
             {/* Floating Button */}
-            <button 
-                className="chatbot-toggle" 
+            <button
+                className="chatbot-toggle"
                 onClick={() => setIsOpen(!isOpen)}
                 title="AI Assistant"
             >
@@ -191,42 +191,42 @@ const Chatbot = () => {
 
                     {/* Mode Tabs */}
                     <div className="chatbot-tabs">
-                        <button 
+                        <button
                             className={`tab ${activeMode === 'chat' ? 'active' : ''}`}
                             onClick={() => setActiveMode('chat')}
                             title="Chat"
                         >
                             💬
                         </button>
-                        <button 
+                        <button
                             className={`tab ${activeMode === 'overview' ? 'active' : ''}`}
                             onClick={() => setActiveMode('overview')}
                             title="Video Overview"
                         >
                             📺
                         </button>
-                        <button 
+                        <button
                             className={`tab ${activeMode === 'recommendations' ? 'active' : ''}`}
                             onClick={() => setActiveMode('recommendations')}
                             title="Recommendations"
                         >
                             ⭐
                         </button>
-                        <button 
+                        <button
                             className={`tab ${activeMode === 'tweet' ? 'active' : ''}`}
                             onClick={() => setActiveMode('tweet')}
                             title="Write Tweet"
                         >
                             🐦
                         </button>
-                        <button 
+                        <button
                             className={`tab ${activeMode === 'title' ? 'active' : ''}`}
                             onClick={() => setActiveMode('title')}
                             title="Generate Title"
                         >
                             ✍️
                         </button>
-                        <button 
+                        <button
                             className={`tab ${activeMode === 'improve' ? 'active' : ''}`}
                             onClick={() => setActiveMode('improve')}
                             title="Improve Tweet"
@@ -234,7 +234,7 @@ const Chatbot = () => {
                             ⚡
                         </button>
                     </div>
-                    
+
                     {/* Messages */}
                     <div className="chatbot-messages">
                         {messages.map((msg, index) => (

@@ -21,8 +21,8 @@ const AddToPlaylist = ({ videoId, className = "" }) => {
     try {
       const response = await fetchUsersPlaylist(user._id);
       // Handle ApiResponse structure: { statusCode, data: [...], message }
-      const playlistsData = Array.isArray(response.data) 
-        ? response.data 
+      const playlistsData = Array.isArray(response.data)
+        ? response.data
         : (Array.isArray(response.data?.data) ? response.data.data : []);
       setPlaylists(playlistsData);
       // Initialize selected IDs based on which playlists already contain this video
@@ -47,11 +47,11 @@ const AddToPlaylist = ({ videoId, className = "" }) => {
         console.log("Adding video:", videoId, "to playlist:", playlistId);
         const response = await addVideoToPlaylist(playlistId, videoId);
         console.log("Playlist response:", response);
-        
+
         const newSelected = new Set(selectedIds);
         newSelected.add(playlistId);
         setSelectedIds(newSelected);
-        
+
         // Show success message and close after 1.5 seconds
         const playlistName = playlists.find(p => p._id === playlistId)?.name || "Playlist";
         setSuccessMessage(`✓ Added to "${playlistName}"`);

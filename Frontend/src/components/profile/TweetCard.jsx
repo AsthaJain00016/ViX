@@ -7,7 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 import React from "react";
 import { useCallback } from "react";
 
-const TweetCard =React.memo(({ tweet, onDeleteTweet }) => {
+const TweetCard = React.memo(({ tweet, onDeleteTweet }) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(tweet.isLiked || false);
   const [likesCount, setLikesCount] = useState(tweet.likesCount || 0);
@@ -33,17 +33,17 @@ const TweetCard =React.memo(({ tweet, onDeleteTweet }) => {
     }
   };
 
-  const handleComment =useCallback( async () => {
+  const handleComment = useCallback(async () => {
     if (!newComment.trim()) return;
 
     setCommenting(true);
     try {
-      const newAddedCommment=await addTweetComment(tweet._id, { content: newComment });
+      const newAddedCommment = await addTweetComment(tweet._id, { content: newComment });
       setNewComment("");
-      setCommentsCount((prev)=>prev+1);
+      setCommentsCount((prev) => prev + 1);
 
-      setComments((prev)=>{
-        const updated=[newAddedCommment,...prev]
+      setComments((prev) => {
+        const updated = [newAddedCommment, ...prev]
         setCommentsCount(updated.length)
         return updated
       });

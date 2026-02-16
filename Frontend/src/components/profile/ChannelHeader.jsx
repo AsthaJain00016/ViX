@@ -1,7 +1,7 @@
 import FollowButton from "../common/FollowButton";
 
-const ChannelHeader = ({user, subscribers, channels,isSubscribed, onChange}) => {
-  console.log("DATTA",subscribers,channels)
+const ChannelHeader = ({ user, subscribers, channels, isSubscribed, onChange }) => {
+  console.log("DATTA", subscribers, channels)
 
 
   return (
@@ -11,7 +11,7 @@ const ChannelHeader = ({user, subscribers, channels,isSubscribed, onChange}) => 
           src={user?.avatar || null}
           alt="avatar"
           className="w-28 h-28 rounded-full border-4 border-black"
-          
+
         />
 
         <div>
@@ -24,9 +24,9 @@ const ChannelHeader = ({user, subscribers, channels,isSubscribed, onChange}) => 
       </div>
 
       <FollowButton
-      channelId={user._id}
-      isSubscribedInitially={isSubscribed}
-      onChange={onChange}
+        channelId={user._id}
+        isSubscribedInitially={isSubscribed}
+        onChange={onChange}
       />
     </div>
   );

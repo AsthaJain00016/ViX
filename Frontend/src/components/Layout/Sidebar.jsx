@@ -38,7 +38,7 @@ export default function Sidebar({ onAIChatClick }) {
                         const path = item.name === 'Saved Videos' ? '/saved-videos' : `/${item.name}`;
                         return (
 
-                            <button key={item.name} className={`w-full text-left border border-white px-3 py-2 hover:text-black transition cursor-pointer flex items-center gap-3
+                            <button key={item.name} className={`w-full text-left border border-white px-3 py-2 rounded-lg hover:text-black transition cursor-pointer flex items-center gap-3
               ${active === item.name
                                     ? "bg-purple-600 text-white"
                                     : "text-gray-300 hover:bg-white hover:text-black"
@@ -51,12 +51,12 @@ export default function Sidebar({ onAIChatClick }) {
                 }
             </div>
             <div className="space-y-3">
-                <button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer flex items-center gap-3" onClick={() => onAIChatClick()}>💬 Chat with AI</button>
-                <button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer flex items-center gap-3" onClick={() => navigate("/Support")}>
+                <button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer flex items-center gap-3 rounded-lg" onClick={() => onAIChatClick()}>💬 Chat with AI</button>
+                <button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer flex items-center gap-3 rounded-lg" onClick={() => navigate("/Support")}>
                     <img src={SupportIcon} alt="Support" className="w-5 h-5 invert-100 hover:invert-0" />
                     Support
                 </button>
-                {user && (<button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer flex items-center gap-3" onClick={() => setOpenSettings(true)}>
+                {user && (<button className="w-full text-left border border-white px-3 py-2 hover:bg-white hover:text-black transition cursor-pointer flex items-center gap-3 rounded-lg" onClick={() => setOpenSettings(true)}>
                     <img src={SettingsIcon} alt="Settings" className="w-5 h-5 invert-100 hover:invert-0" />
                     Settings
                 </button>)}

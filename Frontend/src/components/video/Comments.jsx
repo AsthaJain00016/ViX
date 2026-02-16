@@ -2,11 +2,11 @@ import { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { addComment, fetchAllComments, deleteComment } from "../../api/comment.api";
 
-const Comments = ({video}) => {
-  const [commentCount,setCommentCount]=useState(video?.commentCount || 0);
-  const [comments,setComments]=useState([])
-  const [newComment,setNewComment]=useState("")
-  const [commenting,setCommenting]=useState(false)
+const Comments = ({ video }) => {
+  const [commentCount, setCommentCount] = useState(video?.commentCount || 0);
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState("")
+  const [commenting, setCommenting] = useState(false)
 
   useEffect(() => {
     loadComments();
@@ -22,19 +22,19 @@ const Comments = ({video}) => {
     }
   };
 
-  const handleComment=useCallback(async()=>{
+  const handleComment = useCallback(async () => {
     if (!newComment.trim()) return;
     setCommenting(true);
-    try{
-      const newCommentData = await addComment(video._id,{content:newComment})
+    try {
+      const newCommentData = await addComment(video._id, { content: newComment })
       setNewComment("")
-      setComments((prev)=>{
+      setComments((prev) => {
         return [newCommentData, ...prev]
       })
-      setCommentCount(prev=>prev+1)
-    }catch(error){
+      setCommentCount(prev => prev + 1)
+    } catch (error) {
       console.error("Failed to add comment", error)
-    }finally{
+    } finally {
       setCommenting(false)
     }
   }, [video._id, newComment])
@@ -56,17 +56,17 @@ const Comments = ({video}) => {
       {/* Add comment */}
       <div className="flex w-full bg-black border border-neutral-700 rounded px-3 py-2 text-sm ">
         <input
-        type="text"
-        value={newComment}
-        onChange={(e)=>setNewComment(e.target.value)}
-        placeholder="Add a comment"
-        className="w-full border-none text-sm outline-none"
-      />
-      <button
-      onClick={handleComment}
-      disabled={commenting || !newComment.trim()}
-      className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 text-white px-4 py-2 rounded-full"
-      >{commenting ? "..." : "Comment"}</button>
+          type="text"
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Add a comment"
+          className="w-full border-none text-sm outline-none"
+        />
+        <button
+          onClick={handleComment}
+          disabled={commenting || !newComment.trim()}
+          className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 text-white px-4 py-2 rounded-full"
+        >{commenting ? "..." : "Comment"}</button>
       </div>
 
 
@@ -98,7 +98,7 @@ const Comments = ({video}) => {
           <p className="text-gray-400 text-sm">No comments yet. Be the first to comment!</p>
         )}
       </div>
-      
+
     </div>
   );
 };

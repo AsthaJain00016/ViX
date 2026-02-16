@@ -20,7 +20,7 @@ const faqs = [
   }
 ];
 
-const Support= () => {
+const Support = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [form, setForm] = useState({
     subject: "",

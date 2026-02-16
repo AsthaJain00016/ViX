@@ -16,8 +16,8 @@ const PlaylistGrid = ({ userId, isOwner = false, onRefresh }) => {
     try {
       const response = await fetchUsersPlaylist(userId);
       // Handle ApiResponse structure: { statusCode, data: [...], message }
-      const playlistsData = Array.isArray(response.data) 
-        ? response.data 
+      const playlistsData = Array.isArray(response.data)
+        ? response.data
         : (Array.isArray(response.data?.data) ? response.data.data : []);
       setPlaylists(playlistsData);
     } catch (error) {

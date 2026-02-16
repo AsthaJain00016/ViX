@@ -103,16 +103,14 @@ const VideoPlayer = ({ src }) => {
         ref={videoRef}
         src={src || null}
         onTimeUpdate={handleTimeUpdate}
-        className={`w-full ${
-          isFullscreen ? "h-screen object-contain" : "h-105 object-cover"
-        }`}
+        className={`w-full ${isFullscreen ? "h-screen object-contain" : "h-105 object-cover"
+          }`}
       />
 
       {/* Controls */}
       <div
-        className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-4 transition-opacity duration-300 ${
-          showControls ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-4 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
+          }`}
       >
         {/* Progress Bar */}
         <input

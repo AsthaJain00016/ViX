@@ -1,10 +1,12 @@
 @import "tailwindcss";
+
 .settings-item {
   width: 100%;
   text-align: left;
   padding: 10px;
   border-radius: 6px;
 }
+
 .settings-item:hover {
   background: #1f1f1f;
 }

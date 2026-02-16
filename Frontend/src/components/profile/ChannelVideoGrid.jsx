@@ -58,7 +58,7 @@ const ChannelVideoGrid = ({ videos, loading, isOwner = false, onRefresh }) => {
                   onChange={(e) => setTitle(e.target.value)}
                   className="flex-1 p-2 bg-gray-900 text-white rounded"
                 />
-                <TitleGenerator 
+                <TitleGenerator
                   topic={title || topic}
                   onSelectTitle={(selectedTitle) => setTitle(selectedTitle)}
                 />

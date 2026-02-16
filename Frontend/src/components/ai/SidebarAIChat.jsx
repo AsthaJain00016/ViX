@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { 
-    chatWithAI, 
-    getVideoRecommendations, 
-    writeTweet, 
+import {
+    chatWithAI,
+    getVideoRecommendations,
+    writeTweet,
     generateVideoTitle
 } from '../../api/ai.api';
 import './SidebarAIChat.css';
 
 const SidebarAIChat = () => {
     const [messages, setMessages] = useState([
-        { 
-            role: 'assistant', 
-            content: 'Hey! I\'m your ViX AI Assistant 🤖\n\nI can help you with:\n• Chat and answer questions\n• Suggest videos based on your interests\n• Write tweets for your content\n• Generate catchy video titles\n\nWhat would you like help with?' 
+        {
+            role: 'assistant',
+            content: 'Hey! I\'m your ViX AI Assistant 🤖\n\nI can help you with:\n• Chat and answer questions\n• Suggest videos based on your interests\n• Write tweets for your content\n• Generate catchy video titles\n\nWhat would you like help with?'
         }
     ]);
     const [input, setInput] = useState('');
@@ -34,10 +34,10 @@ const SidebarAIChat = () => {
             if (userMessage.toLowerCase().includes('recommend') || userMessage.toLowerCase().includes('suggest')) {
                 const interestMatch = userMessage.match(/(?:about|for|on)\s+(.+)/i);
                 const interest = interestMatch ? interestMatch[1] : '';
-                
+
                 const response = await getVideoRecommendations([interest]);
                 addMessage('assistant', response.data.aiSuggestions);
-            } 
+            }
             // Check if user is asking for tweet help
             else if (userMessage.toLowerCase().includes('tweet') || userMessage.toLowerCase().includes('write')) {
                 const response = await writeTweet(userMessage);
@@ -101,8 +101,8 @@ const SidebarAIChat = () => {
                     disabled={isLoading}
                     className='text-black'
                 />
-                <button 
-                    onClick={handleSend} 
+                <button
+                    onClick={handleSend}
                     disabled={isLoading || !input.trim()}
                     title="Send message"
                 >

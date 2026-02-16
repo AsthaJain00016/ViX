@@ -6,13 +6,13 @@ import ChangeAvatarModal from "./ChangeAvatarModal";
 import ChangeCoverModal from "./ChangeCoverModal";
 import UpdateUserAccountModal from "./UpdateUserAccountModal";
 const SettingsPanel = ({ onClose }) => {
-    const { user,setUser, logout } = useAuth();
+    const { user, setUser, logout } = useAuth();
     const navigate = useNavigate()
 
-    const [showAvatar,setShowAvatar]=useState(false)
-    const [showCover,setShowCover]=useState(false)
-    const [showPassword,setShowPassword]=useState(false)
-    const [showUpdateAccount,setShowUpdateAccount]=useState(false)
+    const [showAvatar, setShowAvatar] = useState(false)
+    const [showCover, setShowCover] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showUpdateAccount, setShowUpdateAccount] = useState(false)
 
     const handleLogout = async () => {
         await logout();
@@ -42,10 +42,10 @@ const SettingsPanel = ({ onClose }) => {
                     </div>
                 </div>
                 <hr className="border-gray-800 my-4" />
-                <button className="settings-item" onClick={()=>setShowPassword(true)}>Change Password</button>
-                <button className="settings-item" onClick={()=>setShowAvatar(true)}>Change Avatar</button>
-                <button className="settings-item" onClick={()=>setShowCover(true)}>Change Cover Image</button>
-                <button className="settings-item" onClick={()=>setShowUpdateAccount(true)}>Edit Profile</button>
+                <button className="settings-item" onClick={() => setShowPassword(true)}>Change Password</button>
+                <button className="settings-item" onClick={() => setShowAvatar(true)}>Change Avatar</button>
+                <button className="settings-item" onClick={() => setShowCover(true)}>Change Cover Image</button>
+                <button className="settings-item" onClick={() => setShowUpdateAccount(true)}>Edit Profile</button>
                 <hr className="border-gray-800 my-4" />
                 <button
                     onClick={handleLogout}
@@ -54,10 +54,10 @@ const SettingsPanel = ({ onClose }) => {
                     Logout
                 </button>
             </div>
-            {showPassword && <ChangePasswordModal onClose={()=>setShowPassword(false)}/>}
-            {showAvatar && <ChangeAvatarModal onClose={()=>setShowAvatar(false)}/>}
-            {showCover && <ChangeCoverModal onClose={()=>setShowCover(false)}/>}
-            {showUpdateAccount && <UpdateUserAccountModal onClose={()=>setShowUpdateAccount(false)}/>}
+            {showPassword && <ChangePasswordModal onClose={() => setShowPassword(false)} />}
+            {showAvatar && <ChangeAvatarModal onClose={() => setShowAvatar(false)} />}
+            {showCover && <ChangeCoverModal onClose={() => setShowCover(false)} />}
+            {showUpdateAccount && <UpdateUserAccountModal onClose={() => setShowUpdateAccount(false)} />}
         </div>
     )
 }

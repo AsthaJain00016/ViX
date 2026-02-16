@@ -3,27 +3,27 @@ import Layout from "../components/Layout/Layout";
 import { fetchLikedVideos } from "../api/like.api";
 import SearchVideoList from "../components/video/SearchVideoList";
 
-const LikedVideos=()=>{
-    const [videos,setVideos]=useState([]);
-    const [loading,setLoading]=useState(true)
+const LikedVideos = () => {
+    const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true)
 
-    useEffect(()=>{
-        const loadVideos=async()=>{
-            try{
-                const result=await fetchLikedVideos()
+    useEffect(() => {
+        const loadVideos = async () => {
+            try {
+                const result = await fetchLikedVideos()
                 const items = result?.data?.data?.data || [];
                 // likes endpoint returns Like documents with a `video` field
                 const vids = items.map(i => i.video || i);
                 setVideos(vids)
-            }catch(error){
+            } catch (error) {
                 console.error(error)
-            }finally{
+            } finally {
                 setLoading(false)
             }
         }
         loadVideos();
-    },[])
-    return(
+    }, [])
+    return (
         <Layout>
             {loading ? (
                 <p>Loading...</p>

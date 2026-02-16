@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ChannelHeader from "../components/profile/channelHeader";
-import ChannelTabs from "../components/profile/channelTabs";
+import ChannelHeader from "../components/profile/ChannelHeader";
+import ChannelTabs from "../components/profile/ChannelTabs";
 import ChannelVideoGrid from "../components/profile/ChannelVideoGrid";
-import ChannelBanner from "../components/profile/channelBanner";
+import ChannelBanner from "../components/profile/ChannelBanner";
 import Layout from "../components/Layout/Layout";
 import ChannelTweets from "../components/profile/ChannelTweets";
 import FollowingGrid from "../components/profile/FollwingGrid";
@@ -18,11 +18,11 @@ const SubscribedProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [subscribers, setSubscribers] = useState(0);
-    const [videos,setVideos]=useState(null)
+    const [videos, setVideos] = useState(null)
     const [loadingVideos, setLoadingVideos] = useState(true);
 
     const [channels, setChannels] = useState(0);
-    console.log("ID ",id)
+    console.log("ID ", id)
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -32,11 +32,11 @@ const SubscribedProfile = () => {
                 setSubscribers(userData.subscribersCount || 0);
                 setChannels(userData.channelSubscribedToCount || 0);
 
-                try{
+                try {
                     setLoadingVideos(true)
                     const resVideos = await fetchAllVideos({ userId: id })
                     setVideos(resVideos || [])
-                }finally{
+                } finally {
                     setLoadingVideos(false)
                 }
             } catch (err) {
@@ -48,7 +48,7 @@ const SubscribedProfile = () => {
         };
         if (id) {
             fetchUser();
-            console.log("User",user)
+            console.log("User", user)
 
         }
     }, [id]);

@@ -1,26 +1,26 @@
 import { useSearchParams } from "react-router-dom";
-import { useEffect , useState } from "react";
+import { useEffect, useState } from "react";
 import { searchAll } from "../api/search.api";
 import Layout from "../components/Layout/Layout";
 import SearchVideoList from "../components/video/SearchVideoList";
 import SearchProfile from "../components/profile/SearchProfile";
 
-const Search=()=>{
+const Search = () => {
   const [params] = useSearchParams();
-  const query=params.get("q");
-  const [results,setResults]=useState(null);
+  const query = params.get("q");
+  const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(()=>{
-    if(!query) {
+  useEffect(() => {
+    if (!query) {
       setLoading(false);
       return;
     }
 
-    const fetchResults = async()=>{
+    const fetchResults = async () => {
       try {
-        const res=await searchAll(query);
+        const res = await searchAll(query);
         setResults(res.data.data);
         setError(null);
       } catch (err) {
@@ -32,13 +32,13 @@ const Search=()=>{
     }
 
     fetchResults();
-  },[query])
+  }, [query])
 
-  if(loading) return <Layout><p>Loading...</p></Layout>
+  if (loading) return <Layout><p>Loading...</p></Layout>
 
-  if(error) return <Layout><p className="text-red-500">Error: {error}</p></Layout>
+  if (error) return <Layout><p className="text-red-500">Error: {error}</p></Layout>
 
-  if(!results || (!results.videos?.length && !results.users?.length)) {
+  if (!results || (!results.videos?.length && !results.users?.length)) {
     return (
       <Layout>
         <div className="p-6 text-white">
@@ -49,7 +49,7 @@ const Search=()=>{
     );
   }
 
-  return(
+  return (
     <Layout>
       <div className="p-6 text-white">
         <h2 className="text-xl mb-4">Results for {query}</h2>

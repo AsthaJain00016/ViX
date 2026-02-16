@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { deleteVideoById } from "../../api/video.api";
 
-export default function VideoCard({video, isOwner = false, onRefresh}){
-    const navigate=useNavigate()
+export default function VideoCard({ video, isOwner = false, onRefresh }) {
+    const navigate = useNavigate()
 
     const handleDelete = async (e) => {
         e.stopPropagation();
@@ -15,15 +15,15 @@ export default function VideoCard({video, isOwner = false, onRefresh}){
         }
     }
 
-    return(
+    return (
         <div
-        onClick={()=>navigate(`/watch/${video._id}`)}
-         className="cursor-pointer group relative">
+            onClick={() => navigate(`/watch/${video._id}`)}
+            className="cursor-pointer group relative">
             <div className="relative rounded-xl overflow-hidden">
                 <img
-                src={video.thumbnail}
-                alt={video.title}
-                className="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-105"
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-105"
                 />
 
                 <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-0.5 rounded">
@@ -33,9 +33,9 @@ export default function VideoCard({video, isOwner = false, onRefresh}){
 
             <div className="flex gap-3 mt-3">
                 <img
-                src={video.owner.avatar}
-                alt="avatar"
-                className="w-9 h-9 rounded-full object-cover"
+                    src={video.owner.avatar}
+                    alt="avatar"
+                    className="w-9 h-9 rounded-full object-cover"
                 />
                 <div>
                     <h3 className="text-sm text-white font-semibold  line-clamp-2">{video.title}</h3>

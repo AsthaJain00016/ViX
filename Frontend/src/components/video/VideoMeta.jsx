@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
 import AddToPlaylist from "./AddToPlaylist";
 import { useNavigate } from "react-router-dom";
-const VideoMeta = ({video}) => {
+const VideoMeta = ({ video }) => {
   const { user, subscriptionRefreshKey } = useAuth();
   const [subscribers, setSubscribers] = useState(0);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -16,7 +16,7 @@ const VideoMeta = ({video}) => {
   const [saved, setSaved] = useState(false);
   const [loadingLike, setLoadingLike] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,11 +118,11 @@ const VideoMeta = ({video}) => {
           <img
             src={video.owner.avatar}
             className="w-10 h-10 rounded-full"
-            onClick={()=>(navigate(`/subscribed-profile/${video.owner._id}`))}
+            onClick={() => (navigate(`/subscribed-profile/${video.owner._id}`))}
           />
           <div>
-            <p className="font-medium" onClick={()=>(navigate(`/subscribed-profile/${video.owner._id}`))}>{video.owner.username}</p>
-            <p className="text-xs text-gray-400" onClick={()=>(navigate(`/subscribed-profile/${video.owner._id}`))}>{subscribers} Subscribers</p>
+            <p className="font-medium" onClick={() => (navigate(`/subscribed-profile/${video.owner._id}`))}>{video.owner.username}</p>
+            <p className="text-xs text-gray-400" onClick={() => (navigate(`/subscribed-profile/${video.owner._id}`))}>{subscribers} Subscribers</p>
           </div>
           <FollowButton
             channelId={video.owner._id}
@@ -136,7 +136,7 @@ const VideoMeta = ({video}) => {
           <button
             onClick={handleLike}
             disabled={loadingLike}
-            className={`px-3 py-1 rounded ${liked ? 'bg-blue-600' : 'bg-neutral-800'}`}
+            className={`px-3 py-1 rounded ml-1 ${liked ? 'bg-blue-600' : 'bg-neutral-800'}`}
           >
             👍 {likeCount}
           </button>

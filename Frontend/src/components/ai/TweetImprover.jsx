@@ -31,7 +31,7 @@ const TweetImprover = ({ tweetContent, onUseImproved }) => {
 
     return (
         <div className="tweet-improver-container">
-            <button 
+            <button
                 className="improve-tweet-btn"
                 onClick={() => {
                     if (!isOpen && !improvedTweet) {
@@ -49,7 +49,7 @@ const TweetImprover = ({ tweetContent, onUseImproved }) => {
                 <div className="tweet-improver-panel">
                     <div className="improver-header">
                         <h3>Improve Tweet</h3>
-                        <button 
+                        <button
                             className="close-btn"
                             onClick={() => setIsOpen(false)}
                         >
@@ -74,14 +74,14 @@ const TweetImprover = ({ tweetContent, onUseImproved }) => {
                     </div>
 
                     <div className="improver-actions">
-                        <button 
+                        <button
                             className="refresh-btn"
                             onClick={handleImproveTweet}
                             disabled={isLoading}
                         >
                             🔄 Refresh
                         </button>
-                        <button 
+                        <button
                             className="use-btn"
                             onClick={handleUseImproved}
                             disabled={!improvedTweet || isLoading}

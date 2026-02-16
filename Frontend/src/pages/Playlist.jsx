@@ -109,7 +109,7 @@ const PlaylistView = () => {
                     }
                   }}
                 >
-                  <div 
+                  <div
                     className="shrink-0 w-32 h-20 bg-gray-900 rounded relative overflow-hidden"
                     onClick={() => handlePlayVideo(video._id)}
                   >
@@ -138,7 +138,7 @@ const PlaylistView = () => {
 
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 
+                      <h3
                         className="font-semibold text-white hover:text-purple-400 cursor-pointer"
                         onClick={() => handlePlayVideo(video._id)}
                       >

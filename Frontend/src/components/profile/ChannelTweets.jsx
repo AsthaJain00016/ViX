@@ -64,7 +64,7 @@ const ChannelTweets = ({ userId }) => {
   return (
     <div className="max-w-3xl mx-auto mt-6 space-y-6">
       {/* Create Tweet Form */}
-      {!userId &&  (<div className="bg-[#111] border border-gray-800 rounded-xl p-4">
+      {!userId && (<div className="bg-[#111] border border-gray-800 rounded-xl p-4">
         <div className="flex gap-4">
           <img
             src={user.avatar || "https://i.pravatar.cc/150?img=32"}
@@ -80,7 +80,7 @@ const ChannelTweets = ({ userId }) => {
               rows={3}
             />
             <div className="flex justify-between items-center mt-4">
-              <TweetImprover 
+              <TweetImprover
                 tweetContent={newTweet}
                 onUseImproved={(improvedTweet) => setNewTweet(improvedTweet)}
               />

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import LoginModal from "../auth/LoginModal"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import RegisterModal from "../auth/RegisterModal"
+import RegisterModal from "../auth/RegisterModal"   
+import searchIcon from "../../assets/search.png"
 export default function Navbar(){
     const {user,loading}=useAuth()
     const [showLogin,setShowLogin]=useState(false)
@@ -26,15 +27,21 @@ export default function Navbar(){
         <>
         <nav className="h-16 flex items-center justify-between px-6 border-b border-white">
             <div className="text-xl font-bold">ViX</div>
-
+            <div className="flex items-center bg-black border border-white rounded-full overflow-hidden ml-50">
+            <img 
+                src={searchIcon} 
+                alt="Search" 
+                className="w-5 h-5 ml-3 cursor-pointer invert-70"
+            />
             <input
             type="text"
             placeholder="Search"
             value={query}
             onChange={(e)=>setQuery(e.target.value)}
             onKeyDown={handleSearch}
-            className="w-125 bg-black border  border-white px-4 py-2 outline none "
+            className="w-125 bg-black px-4 py-2 outline-none text-white placeholder-gray-400"
             />
+            </div>
 
             <div className="flex gap-4">
                 {

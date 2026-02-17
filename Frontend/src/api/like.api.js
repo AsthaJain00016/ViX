@@ -3,6 +3,9 @@ import api from "./axios";
 export const likeVideo=(videoId)=>{
     return api.post(`/likes/toggle/v/${videoId}`)
 }
+export const dislikeVideo=(videoId)=>{
+    return api.post(`/likes/toggle/dislike/v/${videoId}`)
+}
 export const likeTweet=(tweetId)=>{
     return api.post(`/likes/toggle/t/${tweetId}`)
 }

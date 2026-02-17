@@ -6,6 +6,7 @@ import ChannelBanner from "../components/profile/ChannelBanner";
 import Layout from "../components/Layout/Layout";
 import ChannelTweets from "../components/profile/ChannelTweets";
 import FollowingGrid from "../components/profile/FollwingGrid";
+import PlaylistGrid from "../components/profile/PlaylistGrid";
 import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 import { fetchUserById } from "../api/user.api";
@@ -20,6 +21,18 @@ const SubscribedProfile = () => {
     const [subscribers, setSubscribers] = useState(0);
     const [videos, setVideos] = useState(null)
     const [loadingVideos, setLoadingVideos] = useState(true);
+        const loadVideos = async () => {
+            setLoadingVideos(true)
+            try {
+                const resVideos = await fetchUserVideos()
+                setVideos(resVideos || [])
+            } catch (error) {
+                console.error("Error fetching videos:", error)
+                setVideos([])
+            } finally {
+                setLoadingVideos(false)
+            }
+        }
 
     const [channels, setChannels] = useState(0);
     console.log("ID ", id)
@@ -70,7 +83,7 @@ const SubscribedProfile = () => {
                 <ChannelHeader user={user} subscribers={subscribers} channels={channels} isSubscribed={user.isSubscribed} onChange={handleSubscriptionChange} />
                 <ChannelTabs active={activeTab} setActive={setActiveTab} />
                 {activeTab === "Videos" && <ChannelVideoGrid videos={videos} loading={loadingVideos} isOwner={false} />}
-                {activeTab === "Playlists" && <div>Playlists content here</div>}
+                {activeTab === "Playlists" && <PlaylistGrid userId={user._id} isOwner={true} onRefresh={loadVideos}/>}
                 {activeTab === "Tweets" && <ChannelTweets userId={id} />}
                 {activeTab === "Following" && <FollowingGrid userId={id} />}
             </div>

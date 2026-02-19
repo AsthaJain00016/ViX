@@ -190,18 +190,32 @@ const VideoMeta = ({ video }) => {
      🔥 ACTION BUTTON COMPONENT
      =============================== */
 
-  const ActionButton = ({ onClick, disabled, children, isActive, activeClass = "bg-blue-600", icon }) => (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-all duration-200
-        ${isActive ? activeClass : 'bg-neutral-800 hover:bg-neutral-700'}
-        ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-    >
-      {icon}
-      <span>{children}</span>
-    </button>
-  );
+ const ActionButton = ({
+  onClick,
+  disabled,
+  children,
+  isActive,
+  activeClass,
+  icon
+}) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm
+backdrop-blur-md transition-all duration-300
+${isActive 
+  ? "bg-linear-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30"
+  : "bg-white/5 hover:bg-white/10 border border-white/5"}
+${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
+`}
+
+
+  >
+    {icon}
+    <span>{children}</span>
+  </button>
+);
+
 
   const formatCount = (count) => {
     if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M';
@@ -209,24 +223,41 @@ const VideoMeta = ({ video }) => {
     return count;
   };
 
-  return (
-    <div className="mt-4 text-white">
+ return (
+  <div className="relative">
 
-      <h1 className="text-xl font-semibold">
-        {video.title}
-      </h1>
+    {/* Soft AI Glow */}
+    <div className="absolute -inset-1 bg-linear-to-r 
+        from-purple-500/10 via-blue-500/10 to-purple-500/10 
+        blur-2xl opacity-60">
+    </div>
+    
 
-      <p className="text-gray-400 text-sm mt-1">
-        {formatCount(video.views)} views · {FormatDuration(video.duration)}
-      </p>
+    <div className="relative bg-[#111827]/60 backdrop-blur-xl 
+        border border-white/5 rounded-2xl p-6 space-y-6 
+        shadow-[0_0_30px_rgba(124,58,237,0.08)] 
+        hover:shadow-[0_0_40px_rgba(124,58,237,0.15)] 
+        transition-all duration-500">
 
-      <div className="flex flex-wrap gap-2 mt-4 border-b border-neutral-800 pb-4">
+      {/* Title */}
+      <div>
+        <h1 className="text-2xl font-semibold tracking-wide">
+          {video.title}
+        </h1>
+
+        <p className="text-gray-400 text-sm mt-2">
+          {formatCount(video.views)} views · {FormatDuration(video.duration)}
+        </p>
+      </div>
+
+      {/* AI Action Buttons */}
+      <div className="flex flex-wrap gap-3">
 
         <ActionButton
           onClick={handleLike}
           disabled={loadingLike}
           isActive={liked}
-          icon={<img src={LikedIcon} alt="Like" className={`w-5 h-5 ${liked ? 'invert-0' : 'invert-100'}`} />}
+          icon={<img src={LikedIcon} alt="Like" className="w-5 h-5" />}
         >
           {formatCount(likeCount)}
         </ActionButton>
@@ -235,7 +266,7 @@ const VideoMeta = ({ video }) => {
           onClick={handleDislike}
           disabled={loadingDislike}
           isActive={disliked}
-          icon={<img src={dislikeIcon} alt="Dislike" className={`w-5 h-5 ${disliked ? 'invert-0' : 'invert-100'}`} />}
+          icon={<img src={dislikeIcon} alt="Dislike" className="w-5 h-5" />}
         >
           {formatCount(dislikeCount)}
         </ActionButton>
@@ -244,34 +275,36 @@ const VideoMeta = ({ video }) => {
           onClick={handleSave}
           disabled={loadingSave}
           isActive={saved}
-          icon={
-            saved
-              ? <img src={savedIcon} alt="Saved" className="w-5 h-5" />
-              : <svg className="w-5 h-5 invert-100" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
-                </svg>
-          }
+          icon={<img src={savedIcon} alt="Save" className="w-5 h-5" />}
         >
-          {saved ? 'Saved' : 'Save'}
+          {saved ? "Saved" : "Save"}
         </ActionButton>
 
         <AddToPlaylist videoId={video._id} />
       </div>
 
-      <div className="flex justify-between items-center mt-4 py-3">
+      {/* Channel Row */}
+      <div className="flex justify-between items-center border-t border-white/5 pt-6">
+
         <div
-          className="flex items-center gap-3 cursor-pointer"
+          className="flex items-center gap-4 cursor-pointer group"
           onClick={() => navigate(`/subscribed-profile/${video.owner._id}`)}
         >
           <img
             src={video.owner.avatar}
-            className="w-12 h-12 rounded-full"
+            className="w-12 h-12 rounded-full 
+                       ring-2 ring-purple-500/30 
+                       group-hover:ring-purple-500 
+                       transition"
             alt={video.owner.username}
           />
+
           <div>
-            <p className="font-semibold">{video.owner.username}</p>
+            <p className="font-medium group-hover:text-purple-400 transition">
+              {video.owner.username}
+            </p>
             <p className="text-xs text-gray-400">
-              {formatCount(subscribers)} Subscribers
+              {formatCount(subscribers)} subscribers
             </p>
           </div>
         </div>
@@ -282,12 +315,17 @@ const VideoMeta = ({ video }) => {
         />
       </div>
 
-      <div className="mt-2 bg-neutral-900 p-3 rounded-xl text-sm text-gray-300">
+      {/* Description */}
+      <div className="bg-black/40 border border-white/5 rounded-xl p-4 text-sm text-gray-300 leading-relaxed">
         {video.description}
       </div>
 
     </div>
-  );
+  </div>
+);
+
+
+
 };
 
 export default VideoMeta;

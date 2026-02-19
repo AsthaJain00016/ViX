@@ -5,7 +5,7 @@ import VideoPlayer from "../components/video/VideoPlayer";
 import VideoMeta from "../components/video/VideoMeta";
 import Comments from "../components/video/Comments";
 import SuggestedVideos from "../components/Layout/SuggestedVideos";
-import VideoOverviewButton from "../components/ai/VideoOverviewButton";
+import FloatingAISummary from "../components/ai/FloatingAiSummary"
 import { fetchVideoById } from "../api/video.api";
 import { addToWatchHistory } from "../api/user.api";
 
@@ -57,31 +57,55 @@ const Watch = () => {
 
   return (
     <Layout>
-      <div className="max-w-400 mx-auto px-6 py-6">
-        <div className="grid grid-cols-12 gap-6">
+  <div className="min-h-screen bg-[#0b0f19] text-white px-8 py-10">
+
+    <div className="max-w-375 mx-auto grid grid-cols-12 gap-12">
+
+      {/* LEFT SECTION */}
+      <div className="col-span-12 xl:col-span-8 space-y-10">
+
+        {/* AI Video Container */}
+        <div className="relative group">
           
-          {/* LEFT SECTION */}
-          <div className="col-span-12 lg:col-span-8">
-            <VideoPlayer src={video?.videoFile} />
+          {/* Ambient Glow */}
+          <div className="absolute -inset-2 bg-linear-to-r 
+              from-purple-600/20 via-blue-600/20 to-purple-600/20 
+              blur-2xl opacity-40 group-hover:opacity-70 transition duration-700">
+          </div>
+          <FloatingAISummary videoId={video._id} />
 
-            <div className="flex justify-between items-center mt-4">
-              <VideoMeta video={video} />
-              <VideoOverviewButton
-                videoId={video._id}
-                videoTitle={video.title}
-              />
-            </div>
-
-            <Comments video={video} />
+          {/* Video Wrapper */}
+          <div className="relative rounded-2xl overflow-hidden 
+              bg-black border border-white/5 shadow-2xl">
+            
+            <video
+              src={video?.videoFile}
+              controls
+              className="w-full rounded-2xl"
+            />
+           
           </div>
 
-          {/* RIGHT SECTION */}
-          <div className="col-span-12 lg:col-span-4">
-            <SuggestedVideos currentVideoId={videoId} />
-          </div>
         </div>
+        
+        
+
+        <VideoMeta video={video} />
+
+        <Comments video={video} />
+
       </div>
-    </Layout>
+
+      {/* RIGHT SECTION */}
+      <div className="col-span-12 xl:col-span-4">
+        <SuggestedVideos currentVideoId={videoId} />
+      </div>
+
+    </div>
+
+  </div>
+</Layout>
+
   );
 };
 

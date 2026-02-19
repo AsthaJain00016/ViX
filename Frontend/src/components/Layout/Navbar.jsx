@@ -4,7 +4,8 @@ import LoginModal from "../auth/LoginModal"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import RegisterModal from "../auth/RegisterModal"
-import searchIcon from "../../assets/search.png"
+import { Search } from "lucide-react";
+
 export default function Navbar() {
     const { user, loading } = useAuth()
     const [showLogin, setShowLogin] = useState(false)
@@ -27,21 +28,55 @@ export default function Navbar() {
         <>
             <nav className="h-16 flex items-center justify-between px-6 border-b border-white/5">
                 <div className="text-xl font-bold">ViX</div>
-                <div className="flex items-center bg-black border border-white/20 rounded-full overflow-hidden ml-50">
-                    <img
-                        src={searchIcon}
-                        alt="Search"
-                        className="w-5 h-5 ml-3 cursor-pointer invert-70"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        onKeyDown={handleSearch}
-                        className="w-125 bg-black px-4 py-2 outline-none text-white placeholder-gray-400"
-                    />
-                </div>
+               <div className="relative w-full max-w-2xl group">
+
+  {/* Search Icon */}
+  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-purple-500 z-50" />
+
+
+
+  {/* Input */}
+  <input
+    type="text"
+    placeholder="Search videos..."
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    onKeyDown={handleSearch}
+    className="
+      w-full
+      bg-white/5
+      backdrop-blur-xl
+      border border-white/10
+      text-white
+      placeholder-gray-400
+      pl-12 pr-5 py-3
+      rounded-full
+      outline-none
+      transition-all duration-300
+      focus:border-purple-500
+      focus:ring-2 focus:ring-purple-500/40
+      shadow-xl
+      relative
+      z-10
+    "
+  />
+
+  {/* Glow */}
+  <div
+    className="
+      absolute inset-0
+      rounded-full
+      bg-linear-to-r from-purple-500/20 via-blue-500/20 to-cyan-500/20
+      blur-xl
+      opacity-0
+      group-hover:opacity-100
+      transition duration-500
+      -z-10
+    "
+  />
+
+</div>
+
 
                 <div className="flex gap-4">
                     {

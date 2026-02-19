@@ -41,21 +41,29 @@ const SuggestedVideos = ({ currentVideoId }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-4 ">
       {videos.map((video) => (
         <div
           key={video._id}
-          className="flex gap-3 cursor-pointer hover:bg-neutral-900 p-2 rounded-lg transition"
+          className="group flex gap-4 p-3 rounded-xl 
+bg-white/5 border border-white/5 
+hover:bg-white/10 hover:border-purple-500/20
+transition-all duration-300 cursor-pointer"
+
           onClick={() => navigate(`/watch/${video._id}`)}
         >
           <img
             src={video.thumbnail}
             alt={video.title}
-            className="w-40 h-24 object-cover rounded-lg"
+            className="w-40 h-24 rounded-xl object-cover 
+group-hover:scale-105 transition duration-300"
+
+
           />
 
           <div className="flex-1">
-            <p className="text-sm font-medium line-clamp-2">
+            <p className="text-sm font-medium line-clamp-2 group-hover:text-purple-400 transition">
+
               {video.title}
             </p>
             <p className="text-xs text-gray-400 mt-1">

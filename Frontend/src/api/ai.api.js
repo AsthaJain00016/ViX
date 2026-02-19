@@ -14,7 +14,7 @@ export const chatWithAI = async (message, history = []) => {
 // Get Video Overview
 export const getVideoOverview = async (videoId) => {
     try {
-        const response = await axios.post('/ai/video/overview', { videoId });
+        const response = await axios.post('/ai/overview', { videoId });
         return response.data;
     } catch (error) {
         throw error.response?.data || error.message;

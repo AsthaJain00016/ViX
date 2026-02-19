@@ -1,24 +1,47 @@
-import { useState } from "react"
-import Navbar from "./Navbar"
-import Sidebar from "./Sidebar"
-import SidebarAIChat from "../ai/SidebarAIChat"
-export default function Layout({ children }) {
-    const [showAIChat, setShowAIChat] = useState(false)
-    return (
-        <div className="h-screen bg-black text-white">
-            <Navbar />
+import { useState } from "react";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import SidebarAIChat from "../ai/SidebarAIChat";
 
-            <div className="flex h-[calc(100vh-64px)]">
-                <Sidebar onAIChatClick={() => setShowAIChat(!showAIChat)} />
-                <main className="flex-1 border border-white p-6 overflow-y-auto">
-                    {children}
-                </main>
-                {showAIChat && (
-                    <aside className="w-80 border-l border-white">
-                        <SidebarAIChat />
-                    </aside>
-                )}
-            </div>
-        </div>
-    )
+export default function Layout({ children }) {
+  const [showAIChat, setShowAIChat] = useState(false);
+
+  return (
+    <div className="relative min-h-screen text-white overflow-hidden">
+
+      {/* 🌌 Global Animated Gradient Background */}
+      <div className="absolute inset-0 -z-20 bg-linear-to-br from-purple-900 via-black to-purple-800 animate-gradient" />
+
+      {/* 🌑 Soft Dark Overlay (improves readability) */}
+      <div className="absolute inset-0 -z-10 bg-black/50 backdrop-blur-3xl" />
+
+      {/* 🧭 Navbar */}
+      <Navbar />
+
+      {/* 🏗 Main Layout */}
+      <div className="flex h-[calc(100vh-64px)]">
+
+        {/* 📂 Sidebar */}
+        <Sidebar onAIChatClick={() => setShowAIChat(!showAIChat)} />
+
+        {/* 📄 Main Content Area */}
+        <main className="flex-1 p-6 overflow-y-auto 
+                         bg-white/5 backdrop-blur-xl 
+                         border border-white/10 
+                         ">
+          {children}
+        </main>
+
+        {/* 🤖 AI Chat Panel */}
+        {showAIChat && (
+          <aside className="w-80 border-l border-white/10 
+                            bg-white/5 backdrop-blur-xl 
+                            animate-slideIn">
+            <SidebarAIChat />
+          </aside>
+        )}
+
+      </div>
+    </div>
+  );
 }

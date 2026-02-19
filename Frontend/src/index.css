@@ -10,3 +10,68 @@
 .settings-item:hover {
   background: #1f1f1f;
 }
+.custom-toast {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+@layer components {
+  .settings-btn {
+    @apply w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white 
+    transition-all duration-300 border border-white/10 text-left px-4;
+  }
+}
+
+/* Slide Animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.4s ease-out;
+}
+
+
+/* 🌌 Animated Gradient */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientMove 18s ease infinite;
+}
+
+/* 🤖 Smooth AI Panel Slide */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+.settings-home-btn {
+  width: 100%;
+  padding: 12px 14px;
+  text-align: left;
+  border-radius: 12px;
+  background-color: #111;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.settings-home-btn:hover {
+  background-color: #181818;
+  transform: translateX(4px);
+}

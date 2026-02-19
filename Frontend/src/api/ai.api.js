@@ -25,7 +25,9 @@ export const getVideoOverview = async (videoId) => {
 export const getVideoRecommendations = async (interests = [], userId = null) => {
     try {
         const response = await axios.post('/ai/video/recommendations', { interests, userId });
+        console.log("AI FULL RESPONSE:", response.data);
         return response.data;
+
     } catch (error) {
         throw error.response?.data || error.message;
     }

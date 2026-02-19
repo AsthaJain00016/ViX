@@ -1,116 +1,178 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from "react";
 import {
-    chatWithAI,
-    getVideoRecommendations,
-    writeTweet,
-    generateVideoTitle
-} from '../../api/ai.api';
-import './SidebarAIChat.css';
+  chatWithAI,
+  getVideoRecommendations,
+  writeTweet,
+  generateVideoTitle
+} from "../../api/ai.api";
+import { SendHorizonal } from "lucide-react";
 
 const SidebarAIChat = () => {
-    const [messages, setMessages] = useState([
-        {
-            role: 'assistant',
-            content: 'Hey! I\'m your ViX AI Assistant 🤖\n\nI can help you with:\n• Chat and answer questions\n• Suggest videos based on your interests\n• Write tweets for your content\n• Generate catchy video titles\n\nWhat would you like help with?'
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content:
+        "Hey! I'm your ViX AI Assistant 🤖\n\n• Chat with me\n• Get video ideas\n• Write tweets\n• Generate titles\n\nWhat would you like to create today?"
+    }
+  ]);
+
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const addMessage = (role, content) => {
+    setMessages(prev => [...prev, { role, content }]);
+  };
+
+  // ✨ STREAMING EFFECT
+  const streamResponse = (text) => {
+    return new Promise(resolve => {
+      let index = 0;
+      const speed = 18; // typing speed
+
+      setMessages(prev => [...prev, { role: "assistant", content: "" }]);
+
+      const interval = setInterval(() => {
+        setMessages(prev => {
+          const updated = [...prev];
+          updated[updated.length - 1].content += text[index];
+          return updated;
+        });
+
+        index++;
+        if (index >= text.length) {
+          clearInterval(interval);
+          resolve();
         }
-    ]);
-    const [input, setInput] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+      }, speed);
+    });
+  };
 
-    const addMessage = (role, content) => {
-        setMessages(prev => [...prev, { role, content }]);
-    };
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
 
-    const handleSend = async () => {
-        if (!input.trim() || isLoading) return;
+    const userMessage = input.trim();
+    setInput("");
+    addMessage("user", userMessage);
+    setIsLoading(true);
 
-        const userMessage = input.trim();
-        setInput('');
-        addMessage('user', userMessage);
-        setIsLoading(true);
+    try {
+      let aiText = "";
 
-        try {
-            // Check if user is asking for recommendations
-            if (userMessage.toLowerCase().includes('recommend') || userMessage.toLowerCase().includes('suggest')) {
-                const interestMatch = userMessage.match(/(?:about|for|on)\s+(.+)/i);
-                const interest = interestMatch ? interestMatch[1] : '';
+      if (userMessage.toLowerCase().includes("recommend")) {
+        const response = await getVideoRecommendations([userMessage]);
+        aiText = response.data.aiSuggestions;
+      } else if (userMessage.toLowerCase().includes("tweet")) {
+        const response = await writeTweet(userMessage);
+        aiText = response.data.tweet;
+      } else if (userMessage.toLowerCase().includes("title")) {
+        const response = await generateVideoTitle(userMessage);
+        aiText = response.data.titles.join("\n");
+      } else {
+        const history = messages.map(m => ({
+          role: m.role,
+          content: m.content
+        }));
+        aiText = await chatWithAI(userMessage, history);
+      }
 
-                const response = await getVideoRecommendations([interest]);
-                addMessage('assistant', response.data.aiSuggestions);
-            }
-            // Check if user is asking for tweet help
-            else if (userMessage.toLowerCase().includes('tweet') || userMessage.toLowerCase().includes('write')) {
-                const response = await writeTweet(userMessage);
-                addMessage('assistant', response.data.tweet);
-            }
-            // Check if user is asking for title suggestions
-            else if (userMessage.toLowerCase().includes('title') || userMessage.toLowerCase().includes('name')) {
-                const response = await generateVideoTitle(userMessage);
-                const titles = response.data.titles.join('\n');
-                addMessage('assistant', `Here are some title ideas:\n\n${titles}`);
-            }
-            // General chat
-            else {
-                const history = messages.map(m => ({ role: m.role, content: m.content }));
-                const aiText = await chatWithAI(userMessage, history);
-                addMessage('assistant', aiText);
-            }
-        } catch (error) {
-            console.error(error);
-            addMessage('assistant', 'Oops! Something went wrong. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+      await streamResponse(aiText);
+    } catch (error) {
+      await streamResponse("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-        }
-    };
+  const handleKeyPress = e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
-    return (
-        <div className="sidebar-ai-chat">
-            <div className="ai-chat-header">
-                <span>🤖 ViX AI</span>
-            </div>
+  return (
+    <div className="h-full flex flex-col bg-black border-l border-white/10 relative">
 
-            <div className="ai-chat-messages">
-                {messages.map((msg, index) => (
-                    <div key={index} className={`ai-message ${msg.role}`}>
-                        {msg.content.split('\n').map((line, i) => (
-                            <div key={i}>{line}</div>
-                        ))}
-                    </div>
-                ))}
-                {isLoading && (
-                    <div className="ai-message assistant">
-                        <span className="ai-typing">⏳ Thinking...</span>
-                    </div>
-                )}
-            </div>
+      {/* Subtle Purple Glow */}
+      <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-purple-900/10 pointer-events-none" />
 
-            <div className="ai-chat-input">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Ask me anything..."
-                    disabled={isLoading}
-                    className='text-black'
-                />
-                <button
-                    onClick={handleSend}
-                    disabled={isLoading || !input.trim()}
-                    title="Send message"
-                >
-                    ➤
-                </button>
-            </div>
+      {/* Header */}
+      <div className="relative z-10 px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <h2 className="text-white font-semibold tracking-wide">
+          ViX AI
+        </h2>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
+          <span className="text-xs text-gray-400">Online</span>
         </div>
-    );
+      </div>
+
+      {/* Messages */}
+      <div className="relative z-10 flex-1 overflow-y-auto px-5 py-5 space-y-6">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`flex ${
+              msg.role === "user" ? "justify-end" : "justify-start"
+            } animate-fadeIn`}
+          >
+            <div
+              className={`max-w-[80%] px-5 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap transition-all duration-300 ${
+                msg.role === "user"
+                  ? "bg-purple-600 text-white rounded-br-sm shadow-lg shadow-purple-900/30"
+                  : "bg-linear-to-br from-white/5 to-white/10 text-gray-300 border border-white/10 rounded-bl-sm"
+              }`}
+            >
+              {msg.content}
+            </div>
+          </div>
+        ))}
+
+        {isLoading && (
+          <div className="flex justify-start">
+            <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-2xl flex gap-1">
+              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-150"></span>
+              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-300"></span>
+            </div>
+          </div>
+        )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input */}
+      <div className="relative z-10 p-5 border-t border-white/10">
+        <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-5 py-3 focus-within:border-purple-500 transition-all backdrop-blur-sm">
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={handleKeyPress}
+            placeholder="Ask ViX AI anything..."
+            disabled={isLoading}
+            className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
+          />
+          <button
+            onClick={handleSend}
+            disabled={isLoading || !input.trim()}
+            className="ml-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white p-2 rounded-full transition-all shadow-md shadow-purple-900/40"
+          >
+            <SendHorizonal size={16} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SidebarAIChat;

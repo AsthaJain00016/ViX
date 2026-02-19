@@ -25,9 +25,9 @@ export default function Navbar() {
     if (loading) return null
     return (
         <>
-            <nav className="h-16 flex items-center justify-between px-6 border-b border-white">
+            <nav className="h-16 flex items-center justify-between px-6 border-b border-white/5">
                 <div className="text-xl font-bold">ViX</div>
-                <div className="flex items-center bg-black border border-white rounded-full overflow-hidden ml-50">
+                <div className="flex items-center bg-black border border-white/20 rounded-full overflow-hidden ml-50">
                     <img
                         src={searchIcon}
                         alt="Search"

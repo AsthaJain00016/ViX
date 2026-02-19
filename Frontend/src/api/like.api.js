@@ -16,3 +16,8 @@ export const likeComment=(commentId)=>{
 export const fetchLikedVideos=()=>{
     return api.get(`/likes/videos`)
 }
+
+export const checkVideoLikeStatus = async (videoId) => {
+  const res = await api.get(`/likes/status/${videoId}`);
+  return res.data.data;
+};

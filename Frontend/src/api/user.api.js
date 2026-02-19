@@ -83,6 +83,11 @@ export const checkVideoSaved=async(videoId)=>{
     return res.data.data
 }
 
+export const clearHistory = async () => {
+    return await api.delete("/users/history/clear");
+};
+
+
 export const fetchSavedVideos=async(params = {})=>{
     const res = await api.get(`/users/saved-videos`, { params })
     return res.data.data

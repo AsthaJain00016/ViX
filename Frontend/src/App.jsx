@@ -11,9 +11,13 @@ import Support from "./pages/Support"
 import Search from "./pages/Search"
 import SavedVideos from "./pages/SavedVideos"
 import Playlist from "./pages/Playlist"
+import {ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App(){
     return(
+        <>
         <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home/>}/>
@@ -32,6 +36,17 @@ function App(){
             <Route path="/search" element={<Search/>} />
         </Routes>
         </BrowserRouter>
+
+        <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="dark"
+        newestOnTop
+        pauseOnHover
+        closeOnClick
+      />
+      </>
+
     )
 }
 

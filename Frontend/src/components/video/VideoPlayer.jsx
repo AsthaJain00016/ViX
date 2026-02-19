@@ -1,135 +1,119 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  Play,
-  Pause,
-  Volume2,
-  Maximize,
-  Minimize,
-} from "lucide-react";
+import { Play, Pause, Volume2, Maximize, Minimize } from "lucide-react";
 
 const VideoPlayer = ({ src }) => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
-  const controlsTimeout = useRef(null);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showControls, setShowControls] = useState(true);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState(1);
 
-  /* ---------------- Fullscreen Sync ---------------- */
+  /* FULLSCREEN SYNC */
   useEffect(() => {
-    const onFullscreenChange = () => {
+    const handler = () =>
       setIsFullscreen(!!document.fullscreenElement);
-    };
-    document.addEventListener("fullscreenchange", onFullscreenChange);
+
+    document.addEventListener("fullscreenchange", handler);
     return () =>
-      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      document.removeEventListener("fullscreenchange", handler);
   }, []);
 
-  /* ---------------- Keyboard Shortcuts ---------------- */
+  /* AUTO PLAY */
   useEffect(() => {
-    const handleKey = (e) => {
-      if (e.target.tagName === "INPUT") return;
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [src]);
 
-      if (e.code === "Space") {
-        e.preventDefault();
-        togglePlay();
-      }
-      if (e.key.toLowerCase() === "f") {
-        toggleFullscreen();
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [isPlaying, isFullscreen]);
-
-  /* ---------------- Controls Auto-Hide ---------------- */
-  const showControlsTemporarily = () => {
-    setShowControls(true);
-    clearTimeout(controlsTimeout.current);
-    controlsTimeout.current = setTimeout(() => {
-      setShowControls(false);
-    }, 2500);
-  };
-
-  /* ---------------- Play / Pause ---------------- */
+  /* PLAY / PAUSE */
   const togglePlay = () => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
+
+    if (videoRef.current.paused) {
       videoRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  /* ---------------- Fullscreen ---------------- */
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen();
+      setIsPlaying(true);
     } else {
-      document.exitFullscreen();
+      videoRef.current.pause();
+      setIsPlaying(false);
     }
   };
 
-  /* ---------------- Progress ---------------- */
+  /* PROGRESS */
   const handleTimeUpdate = () => {
     const video = videoRef.current;
+    if (!video || !video.duration) return;
+
     setProgress((video.currentTime / video.duration) * 100);
   };
 
   const seekVideo = (e) => {
     const video = videoRef.current;
-    video.currentTime = (e.target.value / 100) * video.duration;
+    if (!video || !video.duration) return;
+
+    const value = parseFloat(e.target.value);
+    video.currentTime = (value / 100) * video.duration;
   };
 
-  /* ---------------- Volume ---------------- */
+  /* VOLUME */
   const changeVolume = (e) => {
-    const v = e.target.value;
+    const v = parseFloat(e.target.value);
     setVolume(v);
-    videoRef.current.volume = v;
+
+    if (videoRef.current) {
+      videoRef.current.volume = v;
+    }
+  };
+
+  /* FULLSCREEN */
+  const toggleFullscreen = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (!document.fullscreenElement) {
+      container.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
   };
 
   return (
     <div
       ref={containerRef}
-      onMouseMove={showControlsTemporarily}
-      onDoubleClick={toggleFullscreen}
-      className="relative bg-black rounded-lg overflow-hidden select-none"
+      className="relative bg-black rounded-xl overflow-hidden"
     >
       <video
         ref={videoRef}
-        src={src || null}
+        src={src || undefined}
+        autoPlay
+        playsInline
         onTimeUpdate={handleTimeUpdate}
-        className={`w-full ${isFullscreen ? "h-screen object-contain" : "h-105 object-cover"
-          }`}
+        className="w-full h-125 object-contain bg-black"
       />
 
       {/* Controls */}
-      <div
-        className={`absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-4 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
-          }`}
-      >
-        {/* Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-4">
+        
+        {/* Progress */}
         <input
           type="range"
           min="0"
           max="100"
           value={progress}
           onChange={seekVideo}
-          className="w-full mb-3 accent-purple-500 cursor-pointer"
+          className="w-full mb-3 accent-purple-500"
         />
 
-        <div className="flex items-center justify-between text-white">
+        <div className="flex justify-between items-center text-white">
+          
           <div className="flex items-center gap-4">
             <button onClick={togglePlay}>
-              {isPlaying ? <Pause /> : <Play />}
+              {isPlaying ? <Pause size={20} /> : <Play size={20} />}
             </button>
 
             <div className="flex items-center gap-2">
-              <Volume2 />
+              <Volume2 size={18} />
               <input
                 type="range"
                 min="0"
@@ -137,13 +121,17 @@ const VideoPlayer = ({ src }) => {
                 step="0.05"
                 value={volume}
                 onChange={changeVolume}
-                className="w-20 accent-purple-500"
+                className="w-24 accent-purple-500"
               />
             </div>
           </div>
 
           <button onClick={toggleFullscreen}>
-            {isFullscreen ? <Minimize /> : <Maximize />}
+            {isFullscreen ? (
+              <Minimize size={20} />
+            ) : (
+              <Maximize size={20} />
+            )}
           </button>
         </div>
       </div>

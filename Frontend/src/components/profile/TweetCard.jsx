@@ -6,6 +6,7 @@ import { deleteTweet } from "../../api/tweet.api";
 import { useAuth } from "../../context/AuthContext";
 import React from "react";
 import { useCallback } from "react";
+import { toast } from "react-toastify";
 
 const TweetCard = React.memo(({ tweet, onDeleteTweet }) => {
   const { user } = useAuth();
@@ -71,7 +72,11 @@ const TweetCard = React.memo(({ tweet, onDeleteTweet }) => {
   const handleShare = () => {
     // Simple share functionality - copy URL to clipboard
     navigator.clipboard.writeText(window.location.href);
-    alert("Tweet link copied to clipboard!");
+     toast.success("Link copied to clipboard ", {
+  icon: "🔗",
+    className: "custom-toast",
+
+});
   };
 
   return (

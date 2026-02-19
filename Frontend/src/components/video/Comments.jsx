@@ -54,18 +54,18 @@ const Comments = ({ video }) => {
       <h2 className="text-lg font-semibold mb-3">{commentCount} Comments</h2>
 
       {/* Add comment */}
-      <div className="flex w-full bg-black border border-neutral-700 rounded px-3 py-2 text-sm ">
+      <div className="flex w-full bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3 text-sm backdrop-blur-md">
         <input
           type="text"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Add a comment"
-          className="w-full border-none text-sm outline-none"
+          className="flex-1 bg-transparent outline-none text-white"
         />
         <button
           onClick={handleComment}
           disabled={commenting || !newComment.trim()}
-          className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 text-white px-4 py-2 rounded-full"
+          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition-all"
         >{commenting ? "..." : "Comment"}</button>
       </div>
 

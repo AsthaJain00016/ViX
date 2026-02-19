@@ -13,7 +13,7 @@ import { fetchUserById } from "../api/user.api";
 import { fetchAllVideos } from "../api/video.api";
 
 const SubscribedProfile = () => {
-    const { loading: authLoading } = useAuth();
+    const { user: currentUser, loading: authLoading } = useAuth();
     const { id } = useParams();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -83,7 +83,7 @@ const SubscribedProfile = () => {
                 <ChannelHeader user={user} subscribers={subscribers} channels={channels} isSubscribed={user.isSubscribed} onChange={handleSubscriptionChange} />
                 <ChannelTabs active={activeTab} setActive={setActiveTab} />
                 {activeTab === "Videos" && <ChannelVideoGrid videos={videos} loading={loadingVideos} isOwner={false} />}
-                {activeTab === "Playlists" && <PlaylistGrid userId={user._id} isOwner={true} onRefresh={loadVideos}/>}
+                {activeTab === "Playlists" && <PlaylistGrid userId={user._id} isOwner={currentUser?._id === user._id} onRefresh={loadVideos}/>}
                 {activeTab === "Tweets" && <ChannelTweets userId={id} />}
                 {activeTab === "Following" && <FollowingGrid userId={id} />}
             </div>

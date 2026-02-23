@@ -98,7 +98,7 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+{showLogin && <LoginModal onClose={() => setShowLogin(false)} onSwitchToRegister={() => { setShowLogin(false); setShowRegister(true); }} />}
             {showRegister && <RegisterModal onClose={() => setShowRegister(false)} />}
         </>
     )

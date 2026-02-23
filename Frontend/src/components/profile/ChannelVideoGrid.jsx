@@ -70,7 +70,9 @@ const ChannelVideoGrid = ({ videos, loading, isOwner = false, onRefresh }) => {
                 className="w-full mb-2 p-2 bg-gray-900 text-white rounded"
               />
               <div className="flex gap-2">
+                <label>Video File :</label>
                 <input type="file" accept="video/*" onChange={(e) => setVideoFile(e.target.files[0])} />
+                <label>Thumbnail Picture :</label>
                 <input type="file" accept="image/*" onChange={(e) => setThumbnail(e.target.files[0])} />
               </div>
               <div className="mt-3">

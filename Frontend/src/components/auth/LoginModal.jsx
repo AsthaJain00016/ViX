@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext"
 import { loginUser } from "../../api/user.api";
 
-const LoginModal = ({ onClose }) => {
+const LoginModal = ({ onClose, onSwitchToRegister }) => {
     const { setUser } = useAuth();
     const [form, setForm] = useState(
         {
@@ -64,7 +64,7 @@ const LoginModal = ({ onClose }) => {
                 <button className="w-full bg-purple-600 py-2 rounded font-medium" onClick={handleLogin} disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
                 <p className="text-sm text-gray-400 mt-4 text-center">
                     Don't have an account?{" "}
-                    <span className="text-purple-500 cursor-pointer">Register</span>
+<span className="text-purple-500 cursor-pointer" onClick={onSwitchToRegister}>Register</span>
 
                 </p>
             </div>

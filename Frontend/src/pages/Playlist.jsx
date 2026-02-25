@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { fetchPlaylistById, removeVideoFromPlaylist } from "../api/playlist.api";
 import { useAuth } from "../context/AuthContext";
+import { GetThumbnail } from "../components/common/GetThumbnail";
 
 const PlaylistView = () => {
   const { playlistId } = useParams();
@@ -114,7 +115,7 @@ const PlaylistView = () => {
                     onClick={() => handlePlayVideo(video._id)}
                   >
                     <img
-                      src={video.thumbnail || "https://via.placeholder.com/320x180?text=Video"}
+                      src={GetThumbnail(video.videoFile)}
                       alt={video.title}
                       className="w-full h-full object-cover"
                       onError={(e) => {

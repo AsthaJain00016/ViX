@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { GetThumbnail } from "../common/GetThumbnail";
 
 const PlaylistCard = ({ playlist, isOwner = false, onEdit, onDelete }) => {
   const [showActions, setShowActions] = useState(false);
   const videoCount = playlist.videos?.length || 0;
   const thumbnailUrl =
-    playlist.videos?.[0]?.thumbnail || "https://via.placeholder.com/320x180?text=Playlist";
+    GetThumbnail(playlist.videos?.[0]?.videoFile) || "https://via.placeholder.com/320x180?text=Playlist";
 
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition duration-200 group">

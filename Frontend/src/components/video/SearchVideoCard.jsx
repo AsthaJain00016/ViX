@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { GetThumbnail } from "../common/GetThumbnail";
 
 const SearchVideoCard = ({ video }) => {
     const navigate = useNavigate()
@@ -8,7 +9,7 @@ const SearchVideoCard = ({ video }) => {
         >
             <div className="relative w-90 min-w-90">
                 <img
-                    src={video.thumbnail}
+                    src={GetThumbnail(video.videoFile)}
                     alt={video.title}
                     className="w-full h-50 object-cover rounded-lg transition-transform duration-300
             group-hover:scale-105"

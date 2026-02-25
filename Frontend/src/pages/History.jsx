@@ -5,6 +5,7 @@ import { getVideoRecommendations } from "../api/ai.api";
 import { formatDistanceToNow, isToday, isYesterday } from "date-fns";
 import { Search, Trash2, Sparkles } from "lucide-react";
 import { clearHistory } from "../api/user.api";
+import { GetThumbnail } from "../components/common/GetThumbnail";
 
 const History = () => {
   const [videos, setVideos] = useState([]);
@@ -239,13 +240,13 @@ const generateInsights = async () => {
                     >
                       <div className="relative">
                         <img
-                          src={video.thumbnail}
+                          src={GetThumbnail(video.videoFile)}
+                          
                           alt={video.title}
                           className="w-full h-44 object-cover"
                         />
-
                         {/* Watch Progress Bar */}
-                        <div className="absolute bottom-0 left-0 h-1 bg-red-600"
+                        <div className="absolute bottom-0 left-0 h-1 bg-purple-900"
                           style={{ width: `${video.watchProgress || 70}%` }}
                         />
                       </div>

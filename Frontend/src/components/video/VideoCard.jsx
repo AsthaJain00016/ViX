@@ -4,6 +4,7 @@ import { FormatDuration } from "../common/FormatDuration";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useRef ,useState} from "react";
+import { GetThumbnail } from "../common/GetThumbnail";
 dayjs.extend(relativeTime);
 
 
@@ -56,7 +57,7 @@ export default function VideoCard({ video, isOwner = false, onRefresh }) {
             <div className="relative rounded-xl overflow-hidden">
                 
                 <img
-                    src={video.thumbnail}
+                    src={GetThumbnail(video.videoFile)}
                     alt={video.title}
                     className={`w-full h-44 object-cover hover:shadow-xl hover:scale-[1.03]  transition-all duration-300 ${isHovered? "opacity-0 scale-105":"opacity-100"}`}
                 />

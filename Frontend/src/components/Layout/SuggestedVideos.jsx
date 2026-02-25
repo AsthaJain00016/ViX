@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAllVideos } from "../../api/video.api";
+import { GetThumbnail } from "../common/GetThumbnail";
 
 const SuggestedVideos = ({ currentVideoId }) => {
   const [videos, setVideos] = useState([]);
@@ -53,7 +54,7 @@ transition-all duration-300 cursor-pointer"
           onClick={() => navigate(`/watch/${video._id}`)}
         >
           <img
-            src={video.thumbnail}
+            src={GetThumbnail(video.videoFile)}
             alt={video.title}
             className="w-40 h-24 rounded-xl object-cover 
 group-hover:scale-105 transition duration-300"

@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import FollowButton from "../common/FollowButton";
 import AddToPlaylist from "./AddToPlaylist";
 import { useNavigate } from "react-router-dom";
-import { FormatDuration } from "../common/FormatDuration";
+import { formatVideoDuration } from "../common/VideoDuration";
 import LikedIcon from '../../assets/like.png'
 import dislikeIcon from '../../assets/dislike.png'
 import savedIcon from '../../assets/SavedVideos.png'
@@ -246,7 +246,7 @@ ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
         </h1>
 
         <p className="text-gray-400 text-sm mt-2">
-          {formatCount(video.views)} views · {FormatDuration(video.duration)}
+          {formatCount(video.views)} views · {formatVideoDuration(video.duration)}
         </p>
       </div>
 

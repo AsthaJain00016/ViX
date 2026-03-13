@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { deleteVideoById } from "../../api/video.api";
-import { FormatDuration } from "../common/FormatDuration";
+import { formatVideoDuration } from "../common/VideoDuration";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useRef ,useState} from "react";
@@ -71,7 +71,7 @@ export default function VideoCard({ video, isOwner = false, onRefresh }) {
                 className={`absolute inset-0 w-full h-44 object-cover transition-opacity duration-300 ${isHovered?"opacity-100":"opacity-0"}`}
                 />
                 <span className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white text-xs px-2 py-0.5 rounded-xl">
-                    {FormatDuration(video.duration)}</span>
+                    {formatVideoDuration(video.duration)}</span>
 
             </div>
 

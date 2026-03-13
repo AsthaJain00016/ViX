@@ -26,7 +26,7 @@ export default function Navbar() {
     return (
         <>
             <nav className="h-16 flex items-center justify-between px-6 border-b border-white/5">
-                <div className="text-xl font-bold">ViX</div>
+                <div className="text-xl font-bold">StreamVerse</div>
                <div className="relative w-full max-w-2xl group">
 
   {/* Search Icon */}

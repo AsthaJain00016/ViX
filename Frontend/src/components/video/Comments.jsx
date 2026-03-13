@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { addComment, fetchAllComments, deleteComment } from "../../api/comment.api";
+import formatRelativeTime from "../common/TimeUtils";
 
 const Comments = ({ video }) => {
   const [commentCount, setCommentCount] = useState(video?.commentCount || 0);
@@ -82,7 +83,7 @@ const Comments = ({ video }) => {
               />
               <div className="flex-1">
                 <p className="text-sm font-medium">
-                  {comment.owner?.username || "Anonymous"} <span className="text-gray-400 text-xs">{comment.createdAt}</span>
+                  {comment.owner?.username || "Anonymous"} <span className="text-gray-400 text-xs">{formatRelativeTime(comment.createdAt)}</span>
                 </p>
                 <p className="text-gray-300 text-sm">{comment.content}</p>
                 <button

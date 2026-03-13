@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import RegisterModal from "../auth/RegisterModal"
 import { Search } from "lucide-react";
+import Logo from "../../assets/Logo.png";
 
 export default function Navbar() {
     const { user, loading } = useAuth()
@@ -26,7 +27,10 @@ export default function Navbar() {
     return (
         <>
             <nav className="h-16 flex items-center justify-between px-6 border-b border-white/5">
-                <div className="text-xl font-bold">StreamVerse</div>
+<div className="flex items-center gap-2">
+  <img src={Logo} alt="StreamVerse AI" className="h-11 w-auto drop-shadow-2xl filter-[brightness(1.3)_contrast(1.3)_saturate(1.2)] hover:scale-110 transition-transform" />
+  <span className="text-xl font-bold">StreamVerse AI</span>
+</div>
                <div className="relative w-full max-w-2xl group">
 
   {/* Search Icon */}

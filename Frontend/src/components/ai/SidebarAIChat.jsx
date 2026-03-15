@@ -20,6 +20,7 @@ const SidebarAIChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  // Scroll chat to bottom
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -32,22 +33,40 @@ const SidebarAIChat = () => {
     setMessages(prev => [...prev, { role, content }]);
   };
 
-  // ✨ STREAMING EFFECT
+  // Clean AI text before rendering
+  const cleanAIText = (text) => {
+    if (!text) return "";
+
+    return text
+      .replace(/undefined/g, "")
+      .replace(/(.)\1{2,}/g, "$1") // remove excessive char repetition
+      .replace(/[�]+/g, "")
+      .trim();
+  };
+
+  // Safe streaming response
   const streamResponse = (text) => {
     return new Promise(resolve => {
       let index = 0;
-      const speed = 18; // typing speed
+      const speed = 18;
 
       setMessages(prev => [...prev, { role: "assistant", content: "" }]);
 
       const interval = setInterval(() => {
+        index++;
+
         setMessages(prev => {
           const updated = [...prev];
-          updated[updated.length - 1].content += text[index];
+          const lastIndex = updated.length - 1;
+
+          updated[lastIndex] = {
+            ...updated[lastIndex],
+            content: text.slice(0, index)
+          };
+
           return updated;
         });
 
-        index++;
         if (index >= text.length) {
           clearInterval(interval);
           resolve();
@@ -70,21 +89,28 @@ const SidebarAIChat = () => {
       if (userMessage.toLowerCase().includes("recommend")) {
         const response = await getVideoRecommendations([userMessage]);
         aiText = response.data.aiSuggestions;
-      } else if (userMessage.toLowerCase().includes("tweet")) {
+      } 
+      else if (userMessage.toLowerCase().includes("tweet")) {
         const response = await writeTweet(userMessage);
         aiText = response.data.tweet;
-      } else if (userMessage.toLowerCase().includes("title")) {
+      } 
+      else if (userMessage.toLowerCase().includes("title")) {
         const response = await generateVideoTitle(userMessage);
         aiText = response.data.titles.join("\n");
-      } else {
+      } 
+      else {
         const history = messages.map(m => ({
           role: m.role,
           content: m.content
         }));
+
         aiText = await chatWithAI(userMessage, history);
       }
 
-      await streamResponse(aiText);
+      const cleanedText = cleanAIText(aiText);
+
+      await streamResponse(cleanedText);
+
     } catch (error) {
       await streamResponse("Something went wrong. Please try again.");
     } finally {
@@ -102,7 +128,7 @@ const SidebarAIChat = () => {
   return (
     <div className="h-full flex flex-col bg-black border-l border-white/10 relative">
 
-      {/* Subtle Purple Glow */}
+      {/* Purple background glow */}
       <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-purple-900/10 pointer-events-none" />
 
       {/* Header */}
@@ -110,6 +136,7 @@ const SidebarAIChat = () => {
         <h2 className="text-white font-semibold tracking-wide">
           ViX AI
         </h2>
+
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
           <span className="text-xs text-gray-400">Online</span>
@@ -118,12 +145,15 @@ const SidebarAIChat = () => {
 
       {/* Messages */}
       <div className="relative z-10 flex-1 overflow-y-auto px-5 py-5 space-y-6">
+
         {messages.map((msg, index) => (
           <div
             key={index}
             className={`flex ${
-              msg.role === "user" ? "justify-end" : "justify-start"
-            } animate-fadeIn`}
+              msg.role === "user"
+                ? "justify-end"
+                : "justify-start"
+            }`}
           >
             <div
               className={`max-w-[80%] px-5 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap transition-all duration-300 ${
@@ -153,6 +183,7 @@ const SidebarAIChat = () => {
       {/* Input */}
       <div className="relative z-10 p-5 border-t border-white/10">
         <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-5 py-3 focus-within:border-purple-500 transition-all backdrop-blur-sm">
+
           <input
             type="text"
             value={input}
@@ -162,6 +193,7 @@ const SidebarAIChat = () => {
             disabled={isLoading}
             className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
           />
+
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
@@ -169,6 +201,7 @@ const SidebarAIChat = () => {
           >
             <SendHorizonal size={16} />
           </button>
+
         </div>
       </div>
     </div>

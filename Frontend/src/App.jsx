@@ -27,7 +27,7 @@ function App(){
             <Route path="/profile/u/:user" element={<Profile/>}/>
             <Route path="/subscribed-profile/:id" element={<SubscribedProfile/>}/>
             <Route path="/Tweets" element={<Tweet/>}/>
-            <Route path="/Liked Videos" element={<LikedVideos/>} />
+            <Route path="/liked-videos" element={<LikedVideos/>} />
             <Route path="/History" element={<History/>} />
             <Route path="/Following" element={<Following/>} />
             <Route path="/saved-videos" element={<SavedVideos/>} />

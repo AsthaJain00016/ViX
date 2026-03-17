@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 
 const menuItems = [
     { name: "Home", path: "/", icon: HomeIcon },
-    { name: "Liked Videos", path: "/Liked Videos", icon: LikedVideoIcon },
+    { name: "Liked Videos", path: "/liked-videos", icon: LikedVideoIcon },
     { name: "History", path: "/History", icon: HistoryIcon },
     { name: "Tweets", path: "/Tweets", icon: TweetIcon },
     { name: "Following", path: "/Following", icon: FollowingIcon },

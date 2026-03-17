@@ -13,7 +13,9 @@ const LikedVideos = () => {
                 const result = await fetchLikedVideos()
                 const items = result?.data?.data?.data || [];
                 // likes endpoint returns Like documents with a `video` field
-                const vids = items.map(i => i.video || i);
+                const vids = items
+  .map(i => i.video)
+  .filter(Boolean);
                 setVideos(vids)
             } catch (error) {
                 console.error(error)

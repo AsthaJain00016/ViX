@@ -21,7 +21,9 @@ const LoginModal = ({ onClose, onSwitchToRegister }) => {
             setLoading(true);
             setError("")
             const res = await loginUser(form);
-            setUser(res)
+            console.log(res)
+            localStorage.setItem("accessToken", res.accessToken);
+            setUser(res.user)
             onClose();
 
         } catch (error) {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext"
 import { registerUser } from "../../api/user.api";
+import defaultAvatar from "../../assets/defaultProfile.webp"
 
 const RegisterModal = ({ onClose }) => {
     const { setUser } = useAuth();
@@ -21,10 +22,6 @@ const RegisterModal = ({ onClose }) => {
     }
 
     const handleRegister = async () => {
-        if (!avatar) {
-            setError("Avatar is required");
-            return
-        }
 
         try {
             setLoading(true)
@@ -34,7 +31,17 @@ const RegisterModal = ({ onClose }) => {
             formData.append("username", form.username);
             formData.append("email", form.email);
             formData.append("password", form.password);
-            formData.append("avatar", avatar)
+            
+            if(avatar){
+                formData.append("avatar", avatar)
+            }
+            else{
+                const response = await fetch(defaultAvatar);
+            const blob = await response.blob();
+            const file = new File([blob], "defaultProfile.webp", { type: "image/webp" });
+
+            formData.append("avatar", file);
+            }
 
             if (coverImage) {
                 formData.append("coverImage", coverImage)
@@ -96,7 +103,7 @@ const RegisterModal = ({ onClose }) => {
                     required
                 />
 
-                <label className="text-sm text-gray-400">Avatar (required)</label>
+                <label className="text-sm text-gray-400">Avatar (Optional)</label>
                 <input
                     type="file"
                     name="avatar"
@@ -105,7 +112,7 @@ const RegisterModal = ({ onClose }) => {
                     className="w-full mb-3 bg-black border border-gray-700 px-3 py-2 text-sm"
                 />
 
-                <label className="text-sm  text-gray-400">Cover Image (optional)</label>
+                <label className="text-sm  text-gray-400">Cover Image (Optional)</label>
                 <input
                     type="file"
                     accept="image/*"

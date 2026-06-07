@@ -24,7 +24,7 @@ const Tweets = () => {
   const [posting, setPosting] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  // ================= LOAD TWEETS =================
+  //  LOAD TWEETS
   const loadTweets = async () => {
     try {
       const response = await allTweets();
@@ -43,27 +43,29 @@ const Tweets = () => {
     loadTweets().finally(() => setLoading(false));
   }, []);
 
-  // ================= CREATE =================
+  // CREATE
   const handleCreateTweet = async () => {
     if (!newTweet.trim()) return;
 
     setPosting(true);
     try {
-      await createTweet({ content: newTweet });
+      const response = await createTweet({ content: newTweet });
+      const createdTweet = response?.data?.data;
 
-      // Optimistic UI update
-      setTweets((prev) => [
-        {
-          _id: Date.now(),
-          content: newTweet,
-          owner: user,
-          createdAt: new Date().toISOString(),
-        },
-        ...prev,
-      ]);
+      if (createdTweet) {
+        const tweetWithOwner = {
+          ...createdTweet,
+          owner:
+            typeof createdTweet.owner === "object" && createdTweet.owner !== null
+              ? createdTweet.owner
+              : user,
+        };
+
+        setTweets((prev) => [tweetWithOwner, ...prev]);
+      }
 
       setNewTweet("");
-toast.success("Tweet posted successfully", {
+      toast.success("Tweet posted successfully", {
         icon: <FaFeatherAlt />,
         className: "custom-toast",
       });
@@ -79,7 +81,7 @@ toast.success("Tweet posted successfully", {
     }
   };
 
-  // ================= DELETE =================
+  //   DELETE
   const handleDeleteTweet = async (tweetId) => {
     if (!window.confirm("Delete this tweet?")) return;
 
@@ -102,14 +104,14 @@ toast.success("Tweet posted successfully", {
     }
   };
 
-  // ================= REFRESH =================
+  //  REFRESH 
   const handleRefresh = async () => {
     setRefreshing(true);
     await loadTweets();
     setRefreshing(false);
   };
 
-  // ================= LOADING =================
+  //  LOADING 
   if (loading) {
     return (
       <Layout>
@@ -120,7 +122,7 @@ toast.success("Tweet posted successfully", {
     );
   }
 
-  // ================= NOT LOGGED IN =================
+  //  NOT LOGGED IN 
   if (!user) {
     return (
       <Layout>

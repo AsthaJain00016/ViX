@@ -34,9 +34,8 @@ export default function Layout({ children }) {
 
         {/* 🤖 AI Chat Panel */}
         {showAIChat && (
-          <aside className="w-80 border-l border-white/10 
-                            bg-white/5 backdrop-blur-xl 
-                            animate-slideIn">
+          <aside className="absolute top-16 right-0 z-30 w-80 h-[calc(100vh-64px)] border-l border-white/10 
+                            bg-white/5 backdrop-blur-xl shadow-2xl animate-slideIn">
             <SidebarAIChat />
           </aside>
         )}

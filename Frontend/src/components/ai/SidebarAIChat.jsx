@@ -134,7 +134,7 @@ const SidebarAIChat = () => {
       {/* Header */}
       <div className="relative z-10 px-6 py-4 border-b border-white/10 flex items-center justify-between">
         <h2 className="text-white font-semibold tracking-wide">
-          ViX AI
+          StreamVerse AI
         </h2>
 
         <div className="flex items-center gap-2">
@@ -189,7 +189,7 @@ const SidebarAIChat = () => {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="Ask ViX AI anything..."
+            placeholder="Ask StreamVerse AI anything..."
             disabled={isLoading}
             className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
           />

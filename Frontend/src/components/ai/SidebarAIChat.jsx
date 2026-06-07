@@ -12,7 +12,7 @@ const SidebarAIChat = () => {
     {
       role: "assistant",
       content:
-        "Hey! I'm your ViX AI Assistant 🤖\n\n• Chat with me\n• Get video ideas\n• Write tweets\n• Generate titles\n\nWhat would you like to create today?"
+        "Hey! I'm your StreamVerse AI Assistant 🤖\n• Chat with me\n• Get video ideas\n• Write tweets\n• Generate titles\nWhat would you like to create today?"
     }
   ]);
 

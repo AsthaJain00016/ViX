@@ -13,7 +13,7 @@ const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeMode, setActiveMode] = useState('chat'); // chat, overview, recommendations, tweet, title, improve
     const [messages, setMessages] = useState([
-        { role: 'assistant', content: 'Hi! I\'m your AI assistant for ViX. Choose a feature or just chat with me!' }
+        { role: 'assistant', content: 'Hi! I\'m your AI assistant for StreamVerse AI. Choose a topic or just chat with me!' }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);

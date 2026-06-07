@@ -19,7 +19,7 @@ const ChannelHeader = ({ user, subscribers, channels, isSubscribed, onChange }) 
           <h1 className="text-2xl font-semibold text-white">{user.fullName}</h1>
           <p className="text-gray-400">@{user.username}</p>
           <p className="text-sm text-gray-400 mt-1">
-            {subscribers} Subscribers • {channels.totalSubscriptions} Subscribed
+            {subscribers} followers • {channels.totalSubscriptions} followed
           </p>
         </div>
       </div>

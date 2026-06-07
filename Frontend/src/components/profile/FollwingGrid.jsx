@@ -63,7 +63,7 @@ const FollowingGrid = ({ userId }) => {
       ) : filteredFollowers.length === 0 ? (
         <div className="bg-[#111] border border-gray-800 rounded-2xl p-10 text-center">
           <h3 className="text-gray-300 text-lg">
-            You're not following anyone yet 👀
+            Not following anyone yet 👀
           </h3>
           <p className="text-gray-500 mt-2">
             Discover creators and start following them.

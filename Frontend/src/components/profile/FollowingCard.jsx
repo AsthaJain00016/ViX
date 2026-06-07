@@ -44,7 +44,7 @@ const FollowingCard = ({ user }) => {
 
           <div className="flex items-center gap-2 text-gray-400 text-sm mt-1">
             <FaUserFriends className="text-purple-400" />
-            {followers} subscribers
+            {followers} followers
           </div>
         </div>
 

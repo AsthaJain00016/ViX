@@ -1,0 +1,157 @@
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import{ Video} from "../models/video.model.js"
+
+import axios from "axios";
+
+const callFreeAI = async (userPrompt, systemPrompt = "") => {
+    try {
+        const response = await axios.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            {
+                model: "openai/gpt-4o-mini", // you can change model
+                messages: [
+                    {
+                        role: "system",
+                        content: systemPrompt,
+                    },
+                    {
+                        role: "user",
+                        content: userPrompt,
+                    },
+                ],
+                temperature: 0.7,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                    "Content-Type": "application/json",
+
+                    // recommended by OpenRouter
+                    "HTTP-Referer": "http://localhost:3000",
+                    "X-Title": "StreamVerse AI",
+                },
+            }
+        );
+
+        return response.data.choices[0].message.content;
+    } catch (error) {
+        console.error("OpenRouter Error:", error?.response?.data || error.message);
+        return "AI service is temporarily unavailable. Please try again later.";
+    }
+};
+
+// ===============================
+// CONTROLLERS
+// ===============================
+
+export const chatWithAI = asyncHandler(async (req, res) => {
+    const { message } = req.body;
+    if (!message) throw new ApiError(400, "Message is required");
+
+    const systemPrompt = `You are StreamVerse AI — an intelligent SaaS assistant. Be natural, human-like, and conversational.
+    IMPORTANT RULES:
+- Do NOT use markdown formatting
+- Do NOT use **bold**, *italic*, or bullet symbols
+- Return plain simple text only  and you can use emojis only when needed
+- Do not use numbering or special symbols
+    `;
+    const reply = await callFreeAI(message, systemPrompt);
+    console.log(reply)
+    return res.status(200).json(new ApiResponse(200, { response: reply }, "AI response generated"));
+});
+
+export const getVideoOverview = asyncHandler(async (req, res) => {
+    const { videoId } = req.body;
+
+    if (!videoId) {
+        return res.status(400).json({ message: "Video ID is required" });
+    }
+
+    const video = await Video.findById(videoId).populate("owner");
+
+    if (!video) {
+        return res.status(404).json({ message: "Video not found" });
+    }
+
+    const systemPrompt = `
+    You are an expert YouTube video summarizer.
+    Write engaging, human-like video overviews.
+    Keep it natural and professional.
+    `;
+
+    const userPrompt = `
+    Generate an engaging overview for:
+
+    Title: ${video.title}
+    Description: ${video.description}
+    Duration: ${video.duration} minutes
+    Channel: ${video.owner?.username}
+
+    Write 1-2 paragraphs.
+    `;
+
+    const overview = await callFreeAI(userPrompt, systemPrompt);
+
+    return res.status(200).json(
+        new ApiResponse(200, { overview }, "Overview generated")
+    );
+});
+
+
+export const getVideoRecommendations = asyncHandler(async (req, res) => {
+    const { interests } = req.body;
+    const interestsStr = Array.isArray(interests) ? interests.join(", ") : interests;
+
+    const systemPrompt = "You are a personalized video curator.";
+   const userPrompt = `
+User recently watched:
+${interestsStr}
+
+Analyze patterns and suggest 5 highly personalized video topics.
+Do not ask questions.
+Be confident.
+`;
+
+
+    const suggestions = await callFreeAI(userPrompt, systemPrompt);
+    return res.status(200).json(new ApiResponse(200, { suggestions }, "Recommendations generated"));
+});
+
+export const writeTweet = asyncHandler(async (req, res) => {
+    const { videoTitle, context } = req.body;
+
+    const systemPrompt = "You are a social media expert. Write catchy tweets under 280 characters.";
+    const userPrompt = `Write a viral tweet for a video titled: "${videoTitle}". Context: ${context}`;
+
+    const tweet = await callFreeAI(userPrompt, systemPrompt);
+    return res.status(200).json(new ApiResponse(200, { tweet }, "Tweet generated"));
+});
+
+export const improveTweet = asyncHandler(async (req, res) => {
+    const { tweet } = req.body;
+
+    const systemPrompt = "Improve the engagement of this tweet while keeping it under 280 characters.";
+    const improved = await callFreeAI(`Tweet: ${tweet}`, systemPrompt);
+
+    return res.status(200).json(new ApiResponse(200, { improvedTweet: improved }, "Tweet improved"));
+});
+
+export const generateVideoTitle = asyncHandler(async (req, res) => {
+    const { topic } = req.body;
+    if (!topic) throw new ApiError(400, "Topic is required");
+
+    const systemPrompt = "You are a YouTube SEO strategist. Provide only the titles, one per line.";
+    const userPrompt = `Generate 5 clickable YouTube titles about: ${topic}. No numbers, no bullets.`;
+
+    const titlesRaw = await callFreeAI(userPrompt, systemPrompt);
+    
+    // Clean up the response into an array
+    const titles = titlesRaw
+        .split("\n")
+        .map(t => t.trim())
+        .filter(t => t.length > 0 && !t.startsWith('Title'));
+
+    return res.status(200).json(new ApiResponse(200, { titles }, "Titles generated"));
+});

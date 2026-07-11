@@ -18,11 +18,6 @@ app.use(express.static("public"))
 
 app.use(cookieParser())
 
-// CSP header to allow scripts from localhost:5173 for development
-app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:5173");
-    next();
-});
 
 // Routes import
 import userRouter from './routes/user.routes.js'
